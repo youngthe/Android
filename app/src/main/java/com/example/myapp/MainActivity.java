@@ -8,6 +8,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         ProgressBar progressbar2;
         ImageView Main_background;
         String imgName = "myapp.png";    // 이미지 이름
+        Uri ImagefileUri;
 
     public void onClickModify(View v){
         Intent intent = new Intent(this, Setting.class);
@@ -51,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         int howmanyWork = countdday(year,month,date); //얼마나 복무했는가
         int remainingWork = totalWork - howmanyWork; //얼마 남았는지
         textView_endDday = findViewById(R.id.endD_day);
@@ -65,41 +67,39 @@ public class MainActivity extends AppCompatActivity {
         progressbar1.setProgress((int)howmanypercent);
         WhatyourClass(year, month, date);//현재 계급, 다음 계급, 다음계급까지 얼마나 남았는지 출력
 
-        //test
+
         Main_background = findViewById(R.id.Main_background);
-        try {
-            String imgpath = getCacheDir() +"/"+ imgName;   // 내부 저장소에 저장되어 있는 이미지 경로
-            Bitmap bm = BitmapFactory.decodeFile(imgpath);
-            Main_background.setImageBitmap(bm);   // 내부 저장소에 저장된 이미지를 이미지뷰에 셋
-        } catch (Exception e) {}
+
+        String imgpath = getCacheDir() +"/"+ imgName; // 내부 저장소에 저장되어 있는 이미지 경로 저장
+        Bitmap bm = BitmapFactory.decodeFile(imgpath); //imgpath에 존재하는 이미지 가져옴.
+        Main_background.setImageBitmap(bm);   // 내부 저장소에 저장된 이미지를 이미지뷰에 셋
+
 
        //배경화면 클릭을 하면 갤러리를 키는 함수
         Main_background.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent, 101);
+                intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE); //test
+                intent.setAction(Intent.ACTION_GET_CONTENT); //이미지 고름
+                startActivityForResult(intent, 101); //onActivityResult에 결과값을 보냄
             }
         });
-
-
     }
 
 
     // 갤러리를 실행시키고 갤러리에서 가져온 이미지를 비트맵을 사용해서 저장시키는 함수
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) { // 갤러리
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 101) {
             if (resultCode == RESULT_OK) {
-                Uri fileUri = data.getData();
-                ContentResolver resolver = getContentResolver();
+                ImagefileUri = data.getData(); //갤러리에서 이미지 가져오기
+                ContentResolver resolver = getContentResolver(); //ContentResolver 생성자 생성
                 try {
-                    InputStream instream = resolver.openInputStream(fileUri);
-                    Bitmap imgBitmap = BitmapFactory.decodeStream(instream);
+                    InputStream instream = resolver.openInputStream(ImagefileUri); //resolver 생성자에 openInputStream함수에 ImageUri입력
+                    Bitmap imgBitmap = BitmapFactory.decodeStream(instream); //Bitmap factory에 decodeStream에 instream 입력.
                     Main_background.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
                     instream.close();   // 스트림 닫아주기
-                    saveBitmapToJpeg(imgBitmap);    // 내부 저장소에 저장
+                    saveBitmapToJpeg(imgBitmap);    // 비트맵을 이미지 형태로 저장
                 } catch (Exception e) {}
             }
         }
@@ -116,34 +116,19 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {}
     }
 
-//    public void bt2(View view) {    // 이미지 삭제
-//        try {
-//            File file = getCacheDir();  // 내부저장소 캐시 경로를 받아오기
-//            File[] flist = file.listFiles();
-//            for (int i = 0; i < flist.length; i++) {    // 배열의 크기만큼 반복
-//                if (flist[i].getName().equals(imgName)) {   // 삭제하고자 하는 이름과 같은 파일명이 있으면 실행
-//                    flist[i].delete();  // 파일 삭제
-//                    Toast.makeText(getApplicationContext(), "파일 삭제 성공", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        } catch (Exception e) {
-//            Toast.makeText(getApplicationContext(), "파일 삭제 실패", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-
 
     //얼마나 복무했는지 알려주는 함수
-    public int countdday(int myear, int mmonth, int mdate){
+    public int countdday(int year, int month, int date){
         try{
             Calendar todayCal = Calendar.getInstance(); //오늘 날짜 가져오기
             Calendar ddayCal = Calendar.getInstance(); //오늘 날짜를 가져와 변경시킴
 
-            mmonth -=1;
-            ddayCal.set(myear,mmonth,mdate);
+            month -=1;
+            ddayCal.set(year,month,date);
 
             long today = todayCal.getTimeInMillis()/86400000; //초 변환
-            long date = ddayCal.getTimeInMillis()/86400000;
-            long count = today - date;
+            long day = ddayCal.getTimeInMillis()/86400000;
+            long count = today - day;
             return (int) count;
         }
         catch(Exception e){
@@ -184,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
         Next_class = findViewById(R.id.Next_class); //다음 계급
         textView_percent2 = findViewById(R.id.percent2);
         progressbar2 = findViewById(R.id.determinateBar2);
-        //현재 계급, 다음계급, 다음계급까지 남은 일 수 출력
+        //현재 계급, 다음계급, 다음계급까지 남은 일수 출력
         if(today < start) {
             HowmanyNextClass = start-today;
             Current_class.setText("민간인");
@@ -230,6 +215,6 @@ public class MainActivity extends AppCompatActivity {
         textView_percent2.setText(String.format("%.1f", percent)+"%");
         progressbar2.setProgress((int)percent);
         textView_nextClassD_day = findViewById(R.id.nextClassD_day);//다음 계급까지 남은 날
-        textView_nextClassD_day.setText("D-"+(int)(HowmanyNextClass));
+        textView_nextClassD_day.setText("D-"+(int)(HowmanyNextClass-1));
     }
 }
