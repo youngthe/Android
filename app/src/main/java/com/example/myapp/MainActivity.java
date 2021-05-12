@@ -78,13 +78,13 @@ public class MainActivity extends AppCompatActivity {
        //배경화면 클릭을 하면 갤러리를 키는 함수
         Main_background.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE); //test
-                intent.setAction(Intent.ACTION_GET_CONTENT); //이미지 고름
-                startActivityForResult(intent, 101); //onActivityResult에 결과값을 보냄
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
+                startActivityForResult(intent, 101);
             }
         });
     }
+
 
 
     // 갤러리를 실행시키고 갤러리에서 가져온 이미지를 비트맵을 사용해서 저장시키는 함수
