@@ -188,7 +188,6 @@ public class MainActivity extends AppCompatActivity {
         Current_class = findViewById(R.id.Current_class); //현재 계급
         Next_class = findViewById(R.id.Next_class); //다음 계급
         textView_percent2 = findViewById(R.id.percent2);
-        progressbar2 = findViewById(R.id.determinateBar2);
         //현재 계급, 다음계급, 다음계급까지 남은 일수 출력
         if(today < start) {
             HowmanyNextClass = start-today;
@@ -233,6 +232,7 @@ public class MainActivity extends AppCompatActivity {
             percent = 100;
         }
         textView_percent2.setText(String.format("%.1f", percent)+"%");
+        progressbar2 = findViewById(R.id.determinateBar2);
         progressbar2.setProgress((int)percent);
         textView_nextClassD_day = findViewById(R.id.nextClassD_day);//다음 계급까지 남은 날
         textView_nextClassD_day.setText("D-"+(int)(HowmanyNextClass-1));
