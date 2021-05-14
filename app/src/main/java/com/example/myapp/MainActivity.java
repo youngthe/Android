@@ -30,7 +30,9 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-        int year = 2020;
+    private static final int ImageCrop = 1;
+
+    int year = 2020;
         int month = 3;
         int date = 9;
         int totalWork = 640; //총 복무일
@@ -45,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         ImageView Main_background;
         String imgName = "myapp.png";    // 이미지 이름
         Uri ImagefileUri;
-//test
     public void onClickModify(View v){
         Intent intent = new Intent(this, Setting.class);
         startActivity(intent);
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
-                startActivityForResult(intent, 1);
+                startActivityForResult(intent, ImageCrop);
             }
         });
     }
@@ -90,38 +91,35 @@ public class MainActivity extends AppCompatActivity {
     // 갤러리를 실행시키고 갤러리에서 가져온 이미지를 비트맵을 사용해서 저장시키는 함수
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
-            case 101:{
-                final Bundle extras = data.getExtras();
-                if (resultCode == RESULT_OK) {
-
-                    ContentResolver resolver = getContentResolver(); //ContentResolver 생성자 생성
-                    try {
-                        //InputStream instream = resolver.openInputStream(ImagefileUri); //resolver 생성자에 openInputStream함수에 ImageUri입력
-                        Bitmap imgBitmap = extras.getParcelable("data");
-                        //Bitmap imgBitmap = BitmapFactory.decodeStream(instream); //Bitmap factory에 decodeStream에 instream 입력.
-                        Main_background.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
-                        //instream.close();   // 스트림 닫아주기
-                        saveBitmapToJpeg(imgBitmap);    // 비트맵을 이미지 형태로 저장
-                    } catch (Exception e) {}
+            switch(requestCode) {
+                case ImageCrop:{
+                    ImagefileUri = data.getData(); //갤러리에서 이미지 가져오기
+                    Intent intent = new Intent("com.android.camera.action.CROP");
+                    intent.setDataAndType(ImagefileUri, "image/*");
+                    intent.putExtra("outputX", 340);// 크롭한 이미지의 x축 크기
+                    intent.putExtra("outputY", 340);// 크롭한 이미지의 y축 크기
+                    intent.putExtra("aspectX", 1);// crop 박스의 x축 크기
+                    intent.putExtra("aspectY", 1);// crop 박스의 y축 크기
+                    intent.putExtra("scale", true);
+                    intent.putExtra("return-data", true);
+                    startActivityForResult(intent, 101);
                 }
-                break;
-        }
-            case 1:{
-                ImagefileUri = data.getData(); //갤러리에서 이미지 가져오기
-                Intent intent = new Intent("com.android.camera.action.CROP");
-                intent.setDataAndType(ImagefileUri, "image/*");
+                case 101:{
+                    final Bundle extras = data.getExtras();
+                    if (resultCode == RESULT_OK) {
 
-                //300은 성공
-                intent.putExtra("outputX", 340);// 크롭한 이미지의 x축 크기
-                intent.putExtra("outputY", 340);// 크롭한 이미지의 y축 크기
-                intent.putExtra("aspectX", 1);// crop 박스의 x축 크기
-                intent.putExtra("aspectY", 1);// crop 박스의 y축 크기
-                intent.putExtra("scale", true);
-                intent.putExtra("return-data", true);
-                startActivityForResult(intent, 101);
+                        ContentResolver resolver = getContentResolver(); //ContentResolver 생성자 생성
+                        try {
+                            //InputStream instream = resolver.openInputStream(ImagefileUri); //resolver 생성자에 openInputStream함수에 ImageUri입력
+                            Bitmap imgBitmap = extras.getParcelable("data");
+                            //Bitmap imgBitmap = BitmapFactory.decodeStream(instream); //Bitmap factory에 decodeStream에 instream 입력.
+                            Main_background.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
+                            //instream.close();   // 스트림 닫아주기
+                            saveBitmapToJpeg(imgBitmap);    // 비트맵을 이미지 형태로 저장
+                        } catch (Exception e) {}
+                    }
+                    break;
             }
-
         }
     }
 
@@ -135,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
             out.close();    // 스트림 닫아주기
         } catch (Exception e) {}
     }
-
 
     //얼마나 복무했는지 알려주는 함수
     public int countdday(int year, int month, int date){
