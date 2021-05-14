@@ -141,8 +141,8 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="70dp"
-                    android:progressDrawable="@drawable/progressbar_progressbar1"
-                    android:progress="20"/>
+                    android:progress="20"
+                    android:progressDrawable="@drawable/progressbar_progressbar1"/>
                 <TextView
                     android:id="@+id/nextClassD_day"
                     android:layout_width="80dp"

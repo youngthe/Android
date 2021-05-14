@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -31,10 +34,8 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity {
 
     private static final int ImageCrop = 1;
-
-    int year = 2020;
-        int month = 3;
-        int date = 9;
+    int ComeYear, ComeMonth, ComeDay;
+    int OutYear, OutMonth, OutDay;
         int totalWork = 640; //총 복무일
         TextView Current_class; //현재 계급
         TextView Next_class; //다음 계급
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         ImageView Main_background;
         String imgName = "myapp.png";    // 이미지 이름
         Uri ImagefileUri;
+        SQLiteDatabase SQLitedb;
     public void onClickModify(View v){
         Intent intent = new Intent(this, Setting.class);
         startActivity(intent);
@@ -55,18 +57,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        int howmanyWork = countdday(year,month,date); //얼마나 복무했는가
+        getData(); // 데이터베이스에서 입대 정보를 가져오는 함수
+        int howmanyWork = countdday(ComeYear,ComeMonth,ComeDay); //얼마나 복무했는가
         int remainingWork = totalWork - howmanyWork; //얼마 남았는지
         textView_endDday = findViewById(R.id.endD_day);
         textView_endDday.setText("D-"+(remainingWork-1)); //얼마 남았는지 D-DAY 출력
-
         //군 복무 percent 구하는 함수
         textView_percent1 = findViewById(R.id.percent1);
         float howmanypercent = ((float)howmanyWork/(float)totalWork)*(float)100;
         textView_percent1.setText(String.format("%.1f", howmanypercent)+"%");
         progressbar1 = findViewById(R.id.determinateBar1);
         progressbar1.setProgress((int)howmanypercent);
-        WhatyourClass(year, month, date);//현재 계급, 다음 계급, 다음계급까지 얼마나 남았는지 출력
+        WhatyourClass(ComeYear, ComeMonth, ComeDay);//현재 계급, 다음 계급, 다음계급까지 얼마나 남았는지 출력
 
 
         Main_background = findViewById(R.id.Main_background);
@@ -85,8 +87,61 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    private void getData(){
+        init_database(); //데이터베이스 생성
+        init_table(); //테이블 생성
+        load_values(); //값 가져오기
+    }
+    private void init_database(){
 
+        SQLitedb = null;
+        File file = new File(getFilesDir(), "SQLitedb.db");
+        try {
+            SQLitedb = SQLiteDatabase.openOrCreateDatabase(file, null); //이는 데이터베이스 직접 호출 방식, SQLiteOpenHelper를 통한 호출 방식이 좋다고 함
+            Toast.makeText(getApplicationContext(), "success create database! ",Toast.LENGTH_SHORT).show();
+        }catch (SQLiteException e){
+            Toast.makeText(getApplicationContext(), "can't not create database",Toast.LENGTH_SHORT).show();
+        }
+    }
+    private void init_table(){
+        if(SQLitedb != null) {
+            try {
+                String tableSQL = "Create table if not exists DDay " +
+                        "(num integer , " +
+                        "year integer, " +
+                        "month integer, " +
+                        "day integer)";
+                SQLitedb.execSQL(tableSQL);
+            }catch (SQLiteException e){
+                Toast.makeText(getApplicationContext(),"error, can't not create table",Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+    private void load_values(){
 
+        //입대날짜 데이터베이스에서 불러오기
+        try {
+            String SelectComeSQL = "select * from DDay where num=0";
+            Cursor cursor1 = SQLitedb.rawQuery(SelectComeSQL, null);
+            if(cursor1.moveToFirst()) {
+                ComeYear = cursor1.getInt(1);
+                ComeMonth =cursor1.getInt(2);
+                ComeDay =cursor1.getInt(3);
+                cursor1.close();
+            }
+
+            String SelectOutSQL = "select * from DDay where num=1";
+            Cursor cursor2 = SQLitedb.rawQuery(SelectOutSQL, null);
+            if(cursor2.moveToFirst()) {
+                OutYear = cursor2.getInt(1);
+                OutMonth =cursor2.getInt(2);
+                OutDay =cursor2.getInt(3);
+                cursor2.close();
+            }
+        } catch (SQLiteException e){
+            Toast.makeText(getApplicationContext(), "can't get ComeDate", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     // 갤러리를 실행시키고 갤러리에서 가져온 이미지를 비트맵을 사용해서 저장시키는 함수
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -110,11 +165,8 @@ public class MainActivity extends AppCompatActivity {
 
                         ContentResolver resolver = getContentResolver(); //ContentResolver 생성자 생성
                         try {
-                            //InputStream instream = resolver.openInputStream(ImagefileUri); //resolver 생성자에 openInputStream함수에 ImageUri입력
                             Bitmap imgBitmap = extras.getParcelable("data");
-                            //Bitmap imgBitmap = BitmapFactory.decodeStream(instream); //Bitmap factory에 decodeStream에 instream 입력.
                             Main_background.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
-                            //instream.close();   // 스트림 닫아주기
                             saveBitmapToJpeg(imgBitmap);    // 비트맵을 이미지 형태로 저장
                         } catch (Exception e) {}
                     }
