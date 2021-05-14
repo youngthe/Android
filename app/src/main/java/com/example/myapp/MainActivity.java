@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         ImageView Main_background;
         String imgName = "myapp.png";    // 이미지 이름
         Uri ImagefileUri;
-
+//test
     public void onClickModify(View v){
         Intent intent = new Intent(this, Setting.class);
         startActivity(intent);
