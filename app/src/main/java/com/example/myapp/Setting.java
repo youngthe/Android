@@ -164,6 +164,14 @@ public class Setting extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"can't not insert values", Toast.LENGTH_SHORT).show();
             }
         }
+        Intent DataPutIntent = new Intent();
+        DataPutIntent.putExtra("ComeYear", ComeYear);
+        DataPutIntent.putExtra("ComeMonth", ComeMonth);
+        DataPutIntent.putExtra("ComeDay", ComeDay);
+        DataPutIntent.putExtra("OutYear", OutYear);
+        DataPutIntent.putExtra("OutMonth", OutMonth);
+        DataPutIntent.putExtra("OutDay", OutDay);
+        setResult(RESULT_OK, DataPutIntent);
     }
 
 

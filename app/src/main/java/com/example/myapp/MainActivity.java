@@ -33,10 +33,10 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int ImageCrop = 1;
-    int ComeYear, ComeMonth, ComeDay;
-    int OutYear, OutMonth, OutDay;
-        int totalWork = 640; //총 복무일
+        private static final int ImageCrop = 1;
+        int ComeYear, ComeMonth, ComeDay;
+        int OutYear, OutMonth, OutDay;
+        long totalWork;//총 복무일
         TextView Current_class; //현재 계급
         TextView Next_class; //다음 계급
         TextView textView_endDday;
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getData(); // 데이터베이스에서 입대 정보를 가져오는 함수
         int howmanyWork = countdday(ComeYear,ComeMonth,ComeDay); //얼마나 복무했는가
-        int remainingWork = totalWork - howmanyWork; //얼마 남았는지
+        long remainingWork = totalWork - howmanyWork; //얼마 남았는지
         textView_endDday = findViewById(R.id.endD_day);
         textView_endDday.setText("D-"+(remainingWork-1)); //얼마 남았는지 D-DAY 출력
         //군 복무 percent 구하는 함수
@@ -91,6 +91,13 @@ public class MainActivity extends AppCompatActivity {
         init_database(); //데이터베이스 생성
         init_table(); //테이블 생성
         load_values(); //값 가져오기
+
+        //총 복무일 계산
+        Calendar Comedate = Calendar.getInstance();
+        Calendar Outdate = Calendar.getInstance();
+        Comedate.set(ComeYear,ComeMonth,ComeDay);
+        Outdate.set(OutYear,OutMonth,OutDay);
+        totalWork = (((Outdate.getTimeInMillis()/86400000)-(Comedate.getTimeInMillis()/86400000))*60*60*24)+1;
     }
     private void init_database(){
 
@@ -230,7 +237,6 @@ public class MainActivity extends AppCompatActivity {
         long treelevel = level3.getTimeInMillis() / 86400000;//이병(2개월)+일병(6개월)
         long fourlevel = level4.getTimeInMillis() / 86400000;//이병(2개월)+일병(6개월)+상병(6개월)
         long fivelevel = level5.getTimeInMillis() / 86400000;//이병(2개월)+일병(6개월)+상병(6개월)+병장(7개월)
-
         long HowmanyNextClass; //다음 계급까지 얼마나 남았는가
         long total; //각 계급별 총 근무일
         float percent; //다음 계급까지 현재 계급에서 복무한 총 일수
