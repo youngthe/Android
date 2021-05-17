@@ -19,7 +19,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="7">
+            android:layout_weight="8">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -27,8 +27,8 @@
 
                 <ImageView
                     android:id="@+id/modify"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="2dp"
                     android:src="@drawable/pencil"
@@ -39,12 +39,13 @@
                     android:id="@+id/Main_background"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="50dp"
                     android:layout_marginLeft="2dp"
                     android:layout_marginRight="2dp"
                     android:layout_marginBottom="20dp"
                     android:src="@drawable/test"
-                    android:scaleType="centerCrop">
+                    android:scaleType="centerCrop"
+                    android:onClick="onClickBackground">
 
                 </ImageView>
 
@@ -174,7 +175,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="3">
+            android:layout_weight="2">
 
             <TableLayout
                 android:layout_width="match_parent"

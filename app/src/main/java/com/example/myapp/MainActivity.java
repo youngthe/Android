@@ -34,6 +34,8 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity {
 
         private static final int ImageCrop = 1;
+        private static final int ImageSet = 2;
+        private static final int Backhome = 3;
         int ComeYear, ComeMonth, ComeDay;
         int OutYear, OutMonth, OutDay;
         long totalWork;//총 복무일
@@ -50,14 +52,20 @@ public class MainActivity extends AppCompatActivity {
         String imgName = "myapp.png";    // 이미지 이름
         Uri ImagefileUri;
         SQLiteDatabase SQLitedb;
+
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        foundation();
+    }
+
     public void onClickModify(View v){
         Intent intent = new Intent(this, Setting.class);
         startActivity(intent);
     }
 
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    //기초적으로 앱이 실행될 때 연산값을 연산하는 함수
+    private void foundation(){
         getData(); // 데이터베이스에서 입대 정보를 가져오는 함수
         int howmanyWork = countdday(ComeYear,ComeMonth,ComeDay); //얼마나 복무했는가
         long remainingWork = totalWork - howmanyWork; //얼마 남았는지
@@ -74,17 +82,16 @@ public class MainActivity extends AppCompatActivity {
         Bitmap bm = BitmapFactory.decodeFile(imgpath); //imgpath에 존재하는 이미지 가져옴.
         Main_background = findViewById(R.id.Main_background);
         Main_background.setImageBitmap(bm);   // 내부 저장소에 저장된 이미지를 이미지뷰에 셋
-
-
-       //배경화면 클릭을 하면 갤러리를 키는 함수
-        Main_background.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
-                startActivityForResult(intent, ImageCrop);
-            }
-        });
     }
+
+    //배경화면 클릭을 하면 갤러리를 키는 함수
+    public void onClickBackground(View view){
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(intent, ImageCrop);
+    }
+
+    //데이터베이스에서 데이터 가져오는 함수
     private void getData(){
         init_database(); //데이터베이스 생성
         init_table(); //테이블 생성
@@ -164,9 +171,9 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("aspectY", 1);// crop 박스의 y축 크기
                     intent.putExtra("scale", true);
                     intent.putExtra("return-data", true);
-                    startActivityForResult(intent, 101);
+                    startActivityForResult(intent, ImageSet);
                 }
-                case 101:{
+                case ImageSet:{
                     final Bundle extras = data.getExtras();
                     if (resultCode == RESULT_OK) {
 
@@ -179,7 +186,12 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
             }
+                case Backhome:{
+                        foundation();
+                    break;
+                }
         }
+
     }
 
     //위 함수에서 사용하는 이미지 저장함수
@@ -228,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
         level2.set(year, month + 2, date); //훈련병(1개월)+이병(2개월)
         level3.set(year, month + 8, date); //이병(2개월)+일병(6개월)
         level4.set(year, month + 14, date); //이병(2개월)+일병(6개월)+상병(6개월)
-        level5.set(year, month + 21, date); //이병(2개월)+일병(6개월)+상병(6개월)+병장(7개월)
+        level5.set(year, month + 21, date - earlyOut); //이병(2개월)+일병(6개월)+상병(6개월)+병장(7개월)
 
         long today = todayCal.getTimeInMillis() / 86400000;
         long start = startDay.getTimeInMillis() / 86400000;

@@ -19,6 +19,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@drawable/abc_vector_test"
+            android:onClick="onClickBackHome"
             />
     </LinearLayout>
     <LinearLayout
@@ -46,7 +47,8 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:text=""
-            android:layout_span="2"/>
+            android:layout_span="2"
+            android:onClick="onClickDatePicker1"/>
         </TableRow>
         <TableRow>
         <TextView
@@ -60,7 +62,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:layout_span="2"/>
+            android:layout_span="2"
+            android:onClick="onClickDatePicker2"/>
         </TableRow>
 
             <TableRow
@@ -143,7 +146,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="저장하기"
-                android:layout_span="2"/>
+                android:layout_span="2"
+                android:onClick="onClickSave"/>
         </TableRow>
 
     </TableLayout>
