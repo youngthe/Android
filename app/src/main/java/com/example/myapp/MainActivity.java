@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         Calendar Outdate = Calendar.getInstance();
         Comedate.set(ComeYear,ComeMonth,ComeDay);
         Outdate.set(OutYear,OutMonth,OutDay);
-        totalWork = (((Outdate.getTimeInMillis()/86400000)-(Comedate.getTimeInMillis()/86400000))*60*60*24)+1;
+        totalWork = ((Outdate.getTimeInMillis()/86400000)-(Comedate.getTimeInMillis()/86400000))+1;
     }
     private void init_database(){
 
@@ -132,8 +132,8 @@ public class MainActivity extends AppCompatActivity {
             Cursor cursor1 = SQLitedb.rawQuery(SelectComeSQL, null);
             if(cursor1.moveToFirst()) {
                 ComeYear = cursor1.getInt(1);
-                ComeMonth =cursor1.getInt(2);
-                ComeDay =cursor1.getInt(3);
+                ComeMonth = cursor1.getInt(2);
+                ComeDay = cursor1.getInt(3);
                 cursor1.close();
             }
 
@@ -141,8 +141,8 @@ public class MainActivity extends AppCompatActivity {
             Cursor cursor2 = SQLitedb.rawQuery(SelectOutSQL, null);
             if(cursor2.moveToFirst()) {
                 OutYear = cursor2.getInt(1);
-                OutMonth =cursor2.getInt(2);
-                OutDay =cursor2.getInt(3);
+                OutMonth = cursor2.getInt(2);
+                OutDay = cursor2.getInt(3);
                 cursor2.close();
             }
         } catch (SQLiteException e){
