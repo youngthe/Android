@@ -76,7 +76,7 @@
                     android:text="조기 전역" />
 
                 <EditText
-                    android:id="@+id/editTextDate"
+                    android:id="@+id/earlyOutText"
                     android:layout_width="5dp"
                     android:layout_height="50dp"
                     android:ems="10"

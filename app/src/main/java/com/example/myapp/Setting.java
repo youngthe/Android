@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class Setting extends AppCompatActivity {
     SQLiteDatabase SQLitedb;
     int ComeYear, ComeMonth, ComeDay;
     int OutYear, OutMonth, OutDay;
+    int earlyOut=0;
     ImageView back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,9 +93,9 @@ public class Setting extends AppCompatActivity {
             String ComeDate;
             Cursor cursor1 = SQLitedb.rawQuery(SelectComeSQL, null);
             if(cursor1.moveToFirst()) {
-                ComeYear = cursor1.getInt(1);
-                ComeMonth =cursor1.getInt(2);
-                ComeDay =cursor1.getInt(3);
+                ComeYear = cursor1.getShort(1);
+                ComeMonth =cursor1.getShort(2);
+                ComeDay =cursor1.getShort(3);
                 ComeDate = ComeYear+"."+ComeMonth+"."+ComeDay;
                 bt1 = findViewById(R.id.bt1);
                 bt1.setText(ComeDate);
@@ -104,9 +106,9 @@ public class Setting extends AppCompatActivity {
             String OutDate;
             Cursor cursor2 = SQLitedb.rawQuery(SelectOutSQL, null);
             if(cursor2.moveToFirst()) {
-                OutYear = cursor2.getInt(1);
-                OutMonth =cursor2.getInt(2);
-                OutDay =cursor2.getInt(3);
+                OutYear = cursor2.getShort(1);
+                OutMonth =cursor2.getShort(2);
+                OutDay =cursor2.getShort(3);
                 OutDate = OutYear+"."+OutMonth+"."+OutDay;
                 bt2 = findViewById(R.id.bt2);
                 bt2.setText(OutDate);
@@ -136,7 +138,8 @@ public class Setting extends AppCompatActivity {
                         "(num integer , " +
                         "year integer, " +
                         "month integer, " +
-                        "day integer)";
+                        "day integer," +
+                        "earlyOut integer)";
                 SQLitedb.execSQL(tableSQL);
             }catch (SQLiteException e){
                 Toast.makeText(getApplicationContext(),"error, can't not create table",Toast.LENGTH_SHORT).show();
@@ -146,13 +149,15 @@ public class Setting extends AppCompatActivity {
 
     private void save_values(){
 
+        EditText earlyOutText = findViewById(R.id.earlyOutText);
+        earlyOut=Integer.parseInt( earlyOutText.getText().toString());
         if(SQLitedb != null){
             try {
                 //테이블에 존재하는 모든 튜플 삭제
                 SQLitedb.execSQL("Delete from DDay");
                 //입력한 데이터 저장
-                String ComeloadSQL = "insert into DDay (num, year, month, day) values ("+
-                        ""+'0'+",'"+ComeYear+"','"+ComeMonth+"','"+ComeDay+"')";
+                String ComeloadSQL = "insert into DDay (num, year, month, day, earlyOut) values ("+
+                        ""+'0'+",'"+ComeYear+"','"+ComeMonth+"','"+ComeDay+"','"+earlyOut+")";
                 SQLitedb.execSQL(ComeloadSQL);
 
                 String OutloadSQL = "insert into DDay (num, year, month, day) values ("+

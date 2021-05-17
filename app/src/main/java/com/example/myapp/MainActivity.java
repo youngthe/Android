@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         int ComeYear, ComeMonth, ComeDay;
         int OutYear, OutMonth, OutDay;
         long totalWork;//총 복무일
+        int earlyOut;
         TextView Current_class; //현재 계급
         TextView Next_class; //다음 계급
         TextView textView_endDday;
@@ -69,12 +70,9 @@ public class MainActivity extends AppCompatActivity {
         progressbar1 = findViewById(R.id.determinateBar1);
         progressbar1.setProgress((int)howmanypercent);
         WhatyourClass(ComeYear, ComeMonth, ComeDay);//현재 계급, 다음 계급, 다음계급까지 얼마나 남았는지 출력
-
-
-        Main_background = findViewById(R.id.Main_background);
-
         String imgpath = getCacheDir() +"/"+ imgName; // 내부 저장소에 저장되어 있는 이미지 경로 저장
         Bitmap bm = BitmapFactory.decodeFile(imgpath); //imgpath에 존재하는 이미지 가져옴.
+        Main_background = findViewById(R.id.Main_background);
         Main_background.setImageBitmap(bm);   // 내부 저장소에 저장된 이미지를 이미지뷰에 셋
 
 
@@ -98,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
         Comedate.set(ComeYear,ComeMonth,ComeDay);
         Outdate.set(OutYear,OutMonth,OutDay);
         totalWork = ((Outdate.getTimeInMillis()/86400000)-(Comedate.getTimeInMillis()/86400000))+1;
+        totalWork -= earlyOut; //조기전역하는 만큼 총 복무일에서 빼기
     }
     private void init_database(){
 
@@ -105,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
         File file = new File(getFilesDir(), "SQLitedb.db");
         try {
             SQLitedb = SQLiteDatabase.openOrCreateDatabase(file, null); //이는 데이터베이스 직접 호출 방식, SQLiteOpenHelper를 통한 호출 방식이 좋다고 함
-            Toast.makeText(getApplicationContext(), "success create database! ",Toast.LENGTH_SHORT).show();
         }catch (SQLiteException e){
             Toast.makeText(getApplicationContext(), "can't not create database",Toast.LENGTH_SHORT).show();
         }
@@ -117,7 +115,8 @@ public class MainActivity extends AppCompatActivity {
                         "(num integer , " +
                         "year integer, " +
                         "month integer, " +
-                        "day integer)";
+                        "day integer, " +
+                        "earlyOut integer)";
                 SQLitedb.execSQL(tableSQL);
             }catch (SQLiteException e){
                 Toast.makeText(getApplicationContext(),"error, can't not create table",Toast.LENGTH_SHORT).show();
@@ -134,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 ComeYear = cursor1.getInt(1);
                 ComeMonth = cursor1.getInt(2);
                 ComeDay = cursor1.getInt(3);
+                earlyOut = cursor1.getInt(4);
                 cursor1.close();
             }
 
