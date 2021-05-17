@@ -157,7 +157,7 @@ public class Setting extends AppCompatActivity {
                 SQLitedb.execSQL("Delete from DDay");
                 //입력한 데이터 저장
                 String ComeloadSQL = "insert into DDay (num, year, month, day, earlyOut) values ("+
-                        ""+'0'+",'"+ComeYear+"','"+ComeMonth+"','"+ComeDay+"','"+earlyOut+")";
+                        ""+'0'+",'"+ComeYear+"','"+ComeMonth+"','"+ComeDay+"','"+earlyOut+"')";
                 SQLitedb.execSQL(ComeloadSQL);
 
                 String OutloadSQL = "insert into DDay (num, year, month, day) values ("+
