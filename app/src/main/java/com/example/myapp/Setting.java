@@ -33,29 +33,65 @@ public class Setting extends AppCompatActivity {
     int earlyOut=0;
     private static final int Backhome = 3;
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         init_database();//데이터베이스 생성.
         init_table();//테이블 생성
         load_values();//값 입력
+        setDatePicker();
+
     }
-    //입대일 버튼 누를 시 데이트피커 창 오픈
-    public void onClickDatePicker1(View view){
+    public void setDatePicker(){
         DatePickerDialog dialog1 = new DatePickerDialog(this, listener1, 2021, 3, 18);
-        dialog1.show();
-    }
-    //전역일 버튼 누를 시 데이트피커 창 오픈
-    public void onClickDatePicker2(View view){
         DatePickerDialog dialog2 = new DatePickerDialog(this, listener2, 2021, 3, 18);
-        dialog2.show();
+        bt1 = findViewById(R.id.bt1);
+        bt1.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                dialog1.show();
+            }
+        }
+        );
+
+        bt2 = findViewById(R.id.bt2);
+        bt2.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                //입대일 버튼 누를 시 데이트피커 창 오픈
+                dialog2.show();
+            }
+        }
+        );
     }
+
     //돌아가기 버튼 누르면 실행
     public void onClickBackHome(View view){
         Intent intent = new Intent();
         setResult(Backhome, intent);
         finish();
     }
+
+    //입대 데이트피커 입력
+    private DatePickerDialog.OnDateSetListener listener1 = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            ComeYear = year;
+            ComeMonth = (monthOfYear+1);
+            ComeDay = dayOfMonth;
+            bt1.setText(year+"."+(monthOfYear+1)+"."+ dayOfMonth);
+        }
+    };
+
+    //전역 데이트피커 입력
+    private DatePickerDialog.OnDateSetListener listener2 = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            OutYear = year;
+            OutMonth = (monthOfYear+1);
+            OutDay = dayOfMonth;
+            bt2.setText(year+"."+(monthOfYear+1)+"."+ dayOfMonth);
+        }
+    };
 
     //저장하기 버튼 누르면 save_values 함수 실행
     public void onClickSave(View view){
@@ -107,8 +143,6 @@ public class Setting extends AppCompatActivity {
         }
     }
 
-
-
     private void init_table(){
         if(SQLitedb != null) {
             try {
@@ -158,25 +192,5 @@ public class Setting extends AppCompatActivity {
     }
 
 
-    //입대 데이트피커 입력
-    private DatePickerDialog.OnDateSetListener listener1 = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            ComeYear = year;
-            ComeMonth = (monthOfYear+1);
-            ComeDay = dayOfMonth;
-            bt1.setText(year+"."+(monthOfYear+1)+"."+ dayOfMonth);
-        }
-    };
 
-    //전역 데이트피커 입력
-    private DatePickerDialog.OnDateSetListener listener2 = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            OutYear = year;
-            OutMonth = (monthOfYear+1);
-            OutDay = dayOfMonth;
-            bt2.setText(year+"."+(monthOfYear+1)+"."+ dayOfMonth);
-        }
-    };
 }
