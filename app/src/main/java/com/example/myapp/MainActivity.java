@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         int ComeYear, ComeMonth, ComeDay;
         int OutYear, OutMonth, OutDay;
         long totalWork;//총 복무일
-        int earlyOut;
+        int earlyOutDate=0;
         TextView Current_class; //현재 계급
         TextView Next_class; //다음 계급
         TextView textView_endDday;
@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     public void onClickModify(View v){
         Intent intent = new Intent(this, Setting.class);
         startActivity(intent);
+        this.finish();
     }
 
     //기초적으로 앱이 실행될 때 연산값을 연산하는 함수
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         Comedate.set(ComeYear,ComeMonth,ComeDay);
         Outdate.set(OutYear,OutMonth,OutDay);
         totalWork = ((Outdate.getTimeInMillis()/86400000)-(Comedate.getTimeInMillis()/86400000))+1;
-        totalWork -= earlyOut; //조기전역하는 만큼 총 복무일에서 빼기
+        totalWork -= earlyOutDate; //조기전역하는 만큼 총 복무일에서 빼기
     }
     private void init_database(){
 
@@ -140,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 ComeYear = cursor1.getInt(1);
                 ComeMonth = cursor1.getInt(2);
                 ComeDay = cursor1.getInt(3);
-                earlyOut = cursor1.getInt(4);
+                earlyOutDate = cursor1.getInt(4);
                 cursor1.close();
             }
 
@@ -176,8 +177,6 @@ public class MainActivity extends AppCompatActivity {
                 case ImageSet:{
                     final Bundle extras = data.getExtras();
                     if (resultCode == RESULT_OK) {
-
-                        ContentResolver resolver = getContentResolver(); //ContentResolver 생성자 생성
                         try {
                             Bitmap imgBitmap = extras.getParcelable("data");
                             Main_background.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
@@ -186,10 +185,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                     break;
             }
-                case Backhome:{
-                        foundation();
-                    break;
-                }
         }
 
     }
@@ -240,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
         level2.set(year, month + 2, date); //훈련병(1개월)+이병(2개월)
         level3.set(year, month + 8, date); //이병(2개월)+일병(6개월)
         level4.set(year, month + 14, date); //이병(2개월)+일병(6개월)+상병(6개월)
-        level5.set(year, month + 21, date - earlyOut); //이병(2개월)+일병(6개월)+상병(6개월)+병장(7개월)
+        level5.set(year, month + 21, date - earlyOutDate); //이병(2개월)+일병(6개월)+상병(6개월)+병장(7개월)
 
         long today = todayCal.getTimeInMillis() / 86400000;
         long start = startDay.getTimeInMillis() / 86400000;
