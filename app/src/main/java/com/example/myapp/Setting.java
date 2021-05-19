@@ -20,7 +20,7 @@ import java.io.File;
 public class Setting extends AppCompatActivity {
     Button bt1;
     Button bt2;
-    TextView earlyOutText;
+    EditText earlyOutText;
     SQLiteDatabase SQLitedb;
     int ComeYear, ComeMonth, ComeDay;
     int OutYear, OutMonth, OutDay;
