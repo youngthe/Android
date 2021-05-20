@@ -99,16 +99,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_span="3">
-
             </TextView>
         </TableRow>
         <TableRow>
-            <Button
-                android:id="@+id/set_button1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="수정하기"
-                />
             <Button
                 android:id="@+id/set_button2"
                 android:layout_width="wrap_content"
