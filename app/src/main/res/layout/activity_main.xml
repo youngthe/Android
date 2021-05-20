@@ -81,7 +81,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="110dp"
                     android:progress="20"
-                    android:progressDrawable="@drawable/progressbar_progressbar1" />
+                    android:progressDrawable="@drawable/progressbar_progressbar1"/>
 
                 <!--Percent1(복무일)-->
                 <TextView
@@ -191,7 +191,6 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="5dp"
                         android:src="@drawable/onepage">
-
                     </ImageView>
 
                     <ImageView

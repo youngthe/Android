@@ -61,36 +61,9 @@
             android:layout_height="wrap_content"
             android:text=""
             android:layout_span="2"/>
-        </TableRow>
+         </TableRow>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:hint="0"
-                    android:text="조기 전역" />
-
-                <EditText
-                    android:id="@+id/earlyOutText"
-                    android:layout_width="5dp"
-                    android:layout_height="50dp"
-                    android:hint="0"
-                    android:gravity="center"/>
-
-                <TextView
-                    android:id="@+id/Date"
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:text="일"
-                    android:gravity="center_vertical"/>
-            </TableRow>
-
-            <TableRow>
+         <TableRow>
         <TextView
             android:id="@+id/textView4"
             android:layout_width="match_parent"
