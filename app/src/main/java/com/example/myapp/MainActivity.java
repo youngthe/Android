@@ -1,5 +1,6 @@
 package com.example.myapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
 import android.content.ContentResolver;
@@ -35,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
         private static final int ImageCrop = 1;
         private static final int ImageSet = 2;
-        private static final int Backhome = 3;
         int ComeYear, ComeMonth, ComeDay;
         int OutYear, OutMonth, OutDay;
         long totalWork;//총 복무일
@@ -56,12 +56,54 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         foundation();
+
+        //설정 엑티비티에서 넘어온 이미지가 있으면 배경화면에 바로 보여주기.
+        Intent imgget = getIntent();
+        imgget.getParcelableExtra("Image");
+        Bitmap test = imgget.getParcelableExtra("Image");
+        Main_background = findViewById(R.id.Main_background);
+        Main_background.setImageBitmap(test);    // 선택한 이미지 이미지뷰에 셋
+
+        //내부 저장소에 저장되어 있는 이미지 불러오기.
+        String imgpath = getCacheDir() +"/"+ imgName; // 내부 저장소에 저장되어 있는 이미지 경로 저장
+        Bitmap bm = BitmapFactory.decodeFile(imgpath); //imgpath에 존재하는 이미지 가져옴.
+        Main_background = findViewById(R.id.Main_background);
+        Main_background.setImageBitmap(bm);
+
+    }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case ImageCrop:{
+                ImagefileUri = data.getData(); //갤러리에서 이미지 가져오기
+                Intent intent = new Intent("com.android.camera.action.CROP");
+                intent.setDataAndType(ImagefileUri, "image/*");
+                intent.putExtra("outputX", 340);// 크롭한 이미지의 x축 크기
+                intent.putExtra("outputY", 340);// 크롭한 이미지의 y축 크기
+                intent.putExtra("aspectX", 1);// crop 박스의 x축 크기
+                intent.putExtra("aspectY", 1);// crop 박스의 y축 크기
+                intent.putExtra("scale", true);
+                intent.putExtra("return-data", true);
+                startActivityForResult(intent, ImageSet);
+                break;
+            }
+            case ImageSet:{
+                final Bundle extras = data.getExtras();
+                if (resultCode == RESULT_OK) {
+                    try {
+                        Bitmap imgBitmap = extras.getParcelable("data");
+                        Main_background.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
+                        saveBitmapToJpeg(imgBitmap);    // 비트맵을 이미지 형태로 저장
+                    } catch (Exception e) {}
+                }
+                break;
+            }
+        }
     }
 
     public void onClickModify(View v){
         Intent intent = new Intent(this, Setting.class);
         startActivity(intent);
-        this.finish();
     }
 
     //기초적으로 앱이 실행될 때 연산값을 연산하는 함수
@@ -77,11 +119,7 @@ public class MainActivity extends AppCompatActivity {
         textView_percent1.setText(String.format("%.1f", howmanypercent)+"%");
         progressbar1 = findViewById(R.id.determinateBar1);
         progressbar1.setProgress((int)howmanypercent);
-        WhatyourClass(ComeYear, ComeMonth, ComeDay);//현재 계급, 다음 계급, 다음계급까지 얼마나 남았는지 출력
-        String imgpath = getCacheDir() +"/"+ imgName; // 내부 저장소에 저장되어 있는 이미지 경로 저장
-        Bitmap bm = BitmapFactory.decodeFile(imgpath); //imgpath에 존재하는 이미지 가져옴.
-        Main_background = findViewById(R.id.Main_background);
-        Main_background.setImageBitmap(bm);   // 내부 저장소에 저장된 이미지를 이미지뷰에 셋
+        WhatyourClass(ComeYear, ComeMonth, ComeDay);//현재 계급, 다음 계급, 다음계급까지 얼마나 남았는지 출력\
     }
 
     //배경화면 클릭을 하면 갤러리를 키는 함수
@@ -155,35 +193,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // 갤러리를 실행시키고 갤러리에서 가져온 이미지를 비트맵을 사용해서 저장시키는 함수
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-            switch(requestCode) {
-                case ImageCrop:{
-                    ImagefileUri = data.getData(); //갤러리에서 이미지 가져오기
-                    Intent intent = new Intent("com.android.camera.action.CROP");
-                    intent.setDataAndType(ImagefileUri, "image/*");
-                    intent.putExtra("outputX", 340);// 크롭한 이미지의 x축 크기
-                    intent.putExtra("outputY", 340);// 크롭한 이미지의 y축 크기
-                    intent.putExtra("aspectX", 1);// crop 박스의 x축 크기
-                    intent.putExtra("aspectY", 1);// crop 박스의 y축 크기
-                    intent.putExtra("scale", true);
-                    intent.putExtra("return-data", true);
-                    startActivityForResult(intent, ImageSet);
-                }
-                case ImageSet:{
-                    final Bundle extras = data.getExtras();
-                    if (resultCode == RESULT_OK) {
-                        try {
-                            Bitmap imgBitmap = extras.getParcelable("data");
-                            Main_background.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
-                            saveBitmapToJpeg(imgBitmap);    // 비트맵을 이미지 형태로 저장
-                        } catch (Exception e) {}
-                    }
-                    break;
-            }
-        }
 
-    }
 
     //위 함수에서 사용하는 이미지 저장함수
     public void saveBitmapToJpeg(Bitmap bitmap) {   // 선택한 이미지 내부 저장소에 저장

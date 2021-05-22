@@ -1,11 +1,15 @@
 package com.example.myapp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,14 +20,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileOutputStream;
 
 public class Setting extends AppCompatActivity {
+    private static final int ImageCrop = 1;
+    private static final int ImageSet = 2;
     Button bt1;
     Button bt2;
     SQLiteDatabase SQLitedb;
     int ComeYear, ComeMonth, ComeDay;
     int OutYear, OutMonth, OutDay;
-    int earlyOutDate=0;
+    String imgName = "myapp.png";
+    Uri ImagefileUri;
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +41,55 @@ public class Setting extends AppCompatActivity {
         init_table();//테이블 생성
         load_values();//값 입력
         setDatePicker();
+
     }
 
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case ImageCrop:{
+                ImagefileUri = data.getData(); //갤러리에서 이미지 가져오기
+                Intent intent = new Intent("com.android.camera.action.CROP");
+                intent.setDataAndType(ImagefileUri, "image/*");
+                intent.putExtra("outputX", 340);// 크롭한 이미지의 x축 크기
+                intent.putExtra("outputY", 340);// 크롭한 이미지의 y축 크기
+                intent.putExtra("aspectX", 1);// crop 박스의 x축 크기
+                intent.putExtra("aspectY", 1);// crop 박스의 y축 크기
+                intent.putExtra("scale", true);
+                intent.putExtra("return-data", true);
+                startActivityForResult(intent, ImageSet);
+                break;
+            }
+            case ImageSet:{
+                final Bundle extras = data.getExtras();
+                if (resultCode == RESULT_OK) {
+                    try {
+                        Bitmap imgBitmap = extras.getParcelable("data");
+                        saveBitmapToJpeg(imgBitmap);    // 비트맵을 이미지 형태로 저장
+                        Intent imgIntent = new Intent();
+                        imgIntent.putExtra("Image", imgBitmap);
+                        startActivity(imgIntent);
+                    } catch (Exception e) {}
+                }
+                break;
+            }
+        }
+
+    }
+    public void onClick(View view){
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(intent, ImageCrop);
+    }
+    public void saveBitmapToJpeg(Bitmap bitmap) {   // 선택한 이미지 내부 저장소에 저장
+        File tempFile = new File(getCacheDir(), imgName);    // 파일 경로와 이름 넣기
+        try {
+            tempFile.createNewFile();   // 자동으로 빈 파일을 생성하기
+            FileOutputStream out = new FileOutputStream(tempFile);  // 파일을 쓸 수 있는 스트림을 준비하기
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);   // compress 함수를 사용해 스트림에 비트맵을 저장하기
+            out.close();    // 스트림 닫아주기
+        } catch (Exception e) {}
+    }
     public void setDatePicker(){
         DatePickerDialog dialog1 = new DatePickerDialog(this, listener1, 2020, 2, 9);
         DatePickerDialog dialog2 = new DatePickerDialog(this, listener2, 2021, 11, 8);
