@@ -66,9 +66,6 @@ public class Setting extends AppCompatActivity {
                     try {
                         Bitmap imgBitmap = extras.getParcelable("data");
                         saveBitmapToJpeg(imgBitmap);    // 비트맵을 이미지 형태로 저장
-                        Intent imgIntent = new Intent();
-                        imgIntent.putExtra("Image", imgBitmap);
-                        startActivity(imgIntent);
                     } catch (Exception e) {}
                 }
                 break;
@@ -208,8 +205,6 @@ public class Setting extends AppCompatActivity {
     }
 
     private void save_values(){
-
-
         if(SQLitedb != null){
             try {
                 //테이블에 존재하는 모든 튜플 삭제
@@ -223,7 +218,7 @@ public class Setting extends AppCompatActivity {
                         ""+'1'+",'"+OutYear+"','"+OutMonth+"','"+OutDay+"')";
                 SQLitedb.execSQL(OutloadSQL);
 
-                Toast.makeText(getApplicationContext(), "success input values", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "저장되었습니다.", Toast.LENGTH_SHORT).show();
             }catch (SQLiteException e){
                 Toast.makeText(getApplicationContext(),"can't not insert values", Toast.LENGTH_SHORT).show();
             }

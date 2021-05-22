@@ -1,9 +1,6 @@
 package com.example.myapp;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import android.Manifest;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,24 +9,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.security.Permission;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
@@ -56,13 +43,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         foundation();
-
-        //설정 엑티비티에서 넘어온 이미지가 있으면 배경화면에 바로 보여주기.
-        Intent imgget = getIntent();
-        imgget.getParcelableExtra("Image");
-        Bitmap test = imgget.getParcelableExtra("Image");
-        Main_background = findViewById(R.id.Main_background);
-        Main_background.setImageBitmap(test);    // 선택한 이미지 이미지뷰에 셋
 
         //내부 저장소에 저장되어 있는 이미지 불러오기.
         String imgpath = getCacheDir() +"/"+ imgName; // 내부 저장소에 저장되어 있는 이미지 경로 저장
