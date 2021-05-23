@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         private static final int ImageSet = 2;
         int ComeYear, ComeMonth, ComeDay;
         int OutYear, OutMonth, OutDay;
-        long totalWork;//총 복무일s
+        long totalWork;//총 복무일
         TextView Current_class; //현재 계급
         TextView Next_class; //다음 계급
         TextView textView_endDday;
@@ -60,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
                 intent.setDataAndType(ImagefileUri, "image/*");
                 intent.putExtra("outputX", 340);// 크롭한 이미지의 x축 크기
                 intent.putExtra("outputY", 340);// 크롭한 이미지의 y축 크기
-                intent.putExtra("aspectX", 1);// crop 박스의 x축 크기
-                intent.putExtra("aspectY", 1);// crop 박스의 y축 크기
+                intent.putExtra("aspectX", 340);// crop 박스의 x축 크기
+                intent.putExtra("aspectY", 340);// crop 박스의 y축 크기
                 intent.putExtra("scale", true);
                 intent.putExtra("return-data", true);
                 startActivityForResult(intent, ImageSet);
