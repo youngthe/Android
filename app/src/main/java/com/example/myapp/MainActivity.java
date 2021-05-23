@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         private static final int ImageSet = 2;
         int ComeYear, ComeMonth, ComeDay;
         int OutYear, OutMonth, OutDay;
-        long totalWork;//총 복무일
+        long totalWork;//총 복무일s
         TextView Current_class; //현재 계급
         TextView Next_class; //다음 계급
         TextView textView_endDday;
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         textView_percent1.setText(String.format("%.1f", howmanypercent)+"%");
         progressbar1 = findViewById(R.id.determinateBar1);
         progressbar1.setProgress((int)howmanypercent);
-        WhatyourClass(ComeYear, ComeMonth, ComeDay);//현재 계급, 다음 계급, 다음계급까지 얼마나 남았는지 출력\
+        WhatyourClass(ComeYear, ComeMonth, ComeDay, OutYear, OutMonth, OutDay);//현재 계급, 다음 계급, 다음계급까지 얼마나 남았는지 출력
     }
 
     //배경화면 클릭을 하면 갤러리를 키는 함수
@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //계급이 무엇인지 나타내주는 함수
-    public void WhatyourClass(int year, int month, int date) {
+    public void WhatyourClass(int Comeyear, int Comemonth, int Comeday, int Outyear, int Outmonth, int Outday) {
         Calendar todayCal = Calendar.getInstance(); //오늘 날짜 가져오기
         Calendar startDay = Calendar.getInstance();  //입대일
         Calendar level1 = Calendar.getInstance(); //훈련병 //2020.03.09
@@ -215,13 +215,13 @@ public class MainActivity extends AppCompatActivity {
         Calendar level3 = Calendar.getInstance(); //일병   //2020.11.09
         Calendar level4 = Calendar.getInstance(); //상병   //2021.05.09
         Calendar level5 = Calendar.getInstance(); //병장   //2021.12.08
-        month=month-1;
-        startDay.set(year, month, date);
-        level1.set(year, month + 1, date); //훈련병(1개월)
-        level2.set(year, month + 2, date); //훈련병(1개월)+이병(2개월)
-        level3.set(year, month + 8, date); //이병(2개월)+일병(6개월)
-        level4.set(year, month + 14, date); //이병(2개월)+일병(6개월)+상병(6개월)
-        level5.set(year, month + 21, date); //이병(2개월)+일병(6개월)+상병(6개월)+병장(7개월)
+        Comemonth=Comemonth-1;
+        startDay.set(Comeyear, Comemonth, Comeday);
+        level1.set(Comeyear, Comemonth + 1, Comeday); //훈련병(1개월)
+        level2.set(Comeyear, Comemonth + 2, Comeday); //훈련병(1개월)+이병(2개월)
+        level3.set(Comeyear, Comemonth + 8, Comeday); //이병(2개월)+일병(6개월)
+        level4.set(Comeyear, Comemonth + 14, Comeday); //이병(2개월)+일병(6개월)+상병(6개월)
+        level5.set(Outyear, Outmonth, Outday); //전역
 
         long today = todayCal.getTimeInMillis() / 86400000;
         long start = startDay.getTimeInMillis() / 86400000;
