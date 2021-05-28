@@ -53,32 +53,33 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         foundation();
 
-        //내부 저장소에 저장되어 있는 이미지 불러오기.
-        comming_img();
+        comming_img();//내부 저장소에 저장되어 있는 이미지 불러오기
     }
+
+    //내부 저장소에 저장되어 있는 이미지 불러오기
     public void comming_img(){
         String imgpath = getCacheDir() +"/"+ backimg; // 내부 저장소에 저장되어 있는 이미지 경로 저장
         Bitmap bm = BitmapFactory.decodeFile(imgpath); //imgpath에 존재하는 이미지 가져옴.
         Main_background = findViewById(R.id.Main_background);
         Main_background.setImageBitmap(bm);
 
-        imgpath = getCacheDir() +"/"+ img1; // 내부 저장소에 저장되어 있는 이미지 경로 저장
-        bm = BitmapFactory.decodeFile(imgpath); //imgpath에 존재하는 이미지 가져옴.
+        imgpath = getCacheDir() +"/"+ img1; //img1 가져옴
+        bm = BitmapFactory.decodeFile(imgpath);
         Image1 = findViewById(R.id.ImageView1);
         Image1.setImageBitmap(bm);
 
-        imgpath = getCacheDir() +"/"+ img2; // 내부 저장소에 저장되어 있는 이미지 경로 저장
-        bm = BitmapFactory.decodeFile(imgpath); //imgpath에 존재하는 이미지 가져옴.
+        imgpath = getCacheDir() +"/"+ img2; //img2 가져옴
+        bm = BitmapFactory.decodeFile(imgpath);
         Image2 = findViewById(R.id.ImageView2);
         Image2.setImageBitmap(bm);
 
-        imgpath = getCacheDir() +"/"+ img3; // 내부 저장소에 저장되어 있는 이미지 경로 저장
-        bm = BitmapFactory.decodeFile(imgpath); //imgpath에 존재하는 이미지 가져옴.
+        imgpath = getCacheDir() +"/"+ img3; //img3 가져옴
+        bm = BitmapFactory.decodeFile(imgpath);
         Image3 = findViewById(R.id.ImageView3);
         Image3.setImageBitmap(bm);
 
-        imgpath = getCacheDir() +"/"+ img4; // 내부 저장소에 저장되어 있는 이미지 경로 저장
-        bm = BitmapFactory.decodeFile(imgpath); //imgpath에 존재하는 이미지 가져옴.
+        imgpath = getCacheDir() +"/"+ img4; //img4 가져옴
+        bm = BitmapFactory.decodeFile(imgpath);
         Image4 = findViewById(R.id.ImageView4);
         Image4.setImageBitmap(bm);
 
@@ -92,8 +93,8 @@ public class MainActivity extends AppCompatActivity {
                 intent.setDataAndType(ImagefileUri, "image/*");
                 intent.putExtra("outputX", 340);// 크롭한 이미지의 x축 크기
                 intent.putExtra("outputY", 340);// 크롭한 이미지의 y축 크기
-                intent.putExtra("aspectX", 340);// crop 박스의 x축 크기
-                intent.putExtra("aspectY", 340);// crop 박스의 y축 크기
+                intent.putExtra("aspectX", 1);// crop 박스의 x축 크기
+                intent.putExtra("aspectY", 1);// crop 박스의 y축 크기
                 intent.putExtra("scale", true);
                 intent.putExtra("return-data", true);
                 startActivityForResult(intent, ImageSet);
@@ -121,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
                             Image4.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
                             saveBitmapToJpeg(imgBitmap, set_img);    // 비트맵을 이미지 형태로 저장
                         }
-
                     } catch (Exception e) {}
                 }
                 break;
