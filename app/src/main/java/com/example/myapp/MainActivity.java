@@ -35,15 +35,18 @@ public class MainActivity extends AppCompatActivity {
         ProgressBar progressbar1;
         ProgressBar progressbar2;
         ImageView Main_background;
+        ImageView Image1;
+        ImageView Image2;
+        ImageView Image3;
+        ImageView Image4;
         Uri ImagefileUri;
         SQLiteDatabase SQLitedb;
-        String set_img;
         String backimg = "background.png";    // 이미지 이름
         String img1 = "image1.png";
         String img2 = "image2.png";
         String img3 = "image3.png";
         String img4 = "image4.png";
-        ImageView setImageView;
+        String set_img;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,31 +57,30 @@ public class MainActivity extends AppCompatActivity {
         comming_img();
     }
     public void comming_img(){
-
         String imgpath = getCacheDir() +"/"+ backimg; // 내부 저장소에 저장되어 있는 이미지 경로 저장
         Bitmap bm = BitmapFactory.decodeFile(imgpath); //imgpath에 존재하는 이미지 가져옴.
-        setImageView = findViewById(R.id.Main_background);
-        setImageView.setImageBitmap(bm);
+        Main_background = findViewById(R.id.Main_background);
+        Main_background.setImageBitmap(bm);
 
         imgpath = getCacheDir() +"/"+ img1; // 내부 저장소에 저장되어 있는 이미지 경로 저장
         bm = BitmapFactory.decodeFile(imgpath); //imgpath에 존재하는 이미지 가져옴.
-        setImageView = findViewById(R.id.ImageView1);
-        setImageView.setImageBitmap(bm);
+        Image1 = findViewById(R.id.ImageView1);
+        Image1.setImageBitmap(bm);
 
         imgpath = getCacheDir() +"/"+ img2; // 내부 저장소에 저장되어 있는 이미지 경로 저장
         bm = BitmapFactory.decodeFile(imgpath); //imgpath에 존재하는 이미지 가져옴.
-        setImageView = findViewById(R.id.ImageView2);
-        setImageView.setImageBitmap(bm);
+        Image2 = findViewById(R.id.ImageView2);
+        Image2.setImageBitmap(bm);
 
         imgpath = getCacheDir() +"/"+ img3; // 내부 저장소에 저장되어 있는 이미지 경로 저장
         bm = BitmapFactory.decodeFile(imgpath); //imgpath에 존재하는 이미지 가져옴.
-        setImageView = findViewById(R.id.ImageView3);
-        setImageView.setImageBitmap(bm);
+        Image3 = findViewById(R.id.ImageView3);
+        Image3.setImageBitmap(bm);
 
         imgpath = getCacheDir() +"/"+ img4; // 내부 저장소에 저장되어 있는 이미지 경로 저장
         bm = BitmapFactory.decodeFile(imgpath); //imgpath에 존재하는 이미지 가져옴.
-        setImageView = findViewById(R.id.ImageView4);
-        setImageView.setImageBitmap(bm);
+        Image4 = findViewById(R.id.ImageView4);
+        Image4.setImageBitmap(bm);
 
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -102,8 +104,24 @@ public class MainActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
                     try {
                         Bitmap imgBitmap = extras.getParcelable("data");
-                        Main_background.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
-                        saveBitmapToJpeg(imgBitmap, set_img);    // 비트맵을 이미지 형태로 저장
+
+                        if(set_img=="background.png"){
+                            Main_background.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
+                            saveBitmapToJpeg(imgBitmap, set_img);    // 비트맵을 이미지 형태로 저장
+                        }else if(set_img=="img1.png"){
+                            Image1.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
+                            saveBitmapToJpeg(imgBitmap, set_img);    // 비트맵을 이미지 형태로 저장
+                        }else if(set_img=="img2.png"){
+                            Image2.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
+                            saveBitmapToJpeg(imgBitmap, set_img);    // 비트맵을 이미지 형태로 저장
+                        }else if(set_img=="img3.png"){
+                            Image3.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
+                            saveBitmapToJpeg(imgBitmap, set_img);    // 비트맵을 이미지 형태로 저장
+                        }else{
+                            Image4.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
+                            saveBitmapToJpeg(imgBitmap, set_img);    // 비트맵을 이미지 형태로 저장
+                        }
+
                     } catch (Exception e) {}
                 }
                 break;
