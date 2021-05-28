@@ -108,13 +108,13 @@ public class MainActivity extends AppCompatActivity {
                         if(set_img=="background.png"){
                             Main_background.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
                             saveBitmapToJpeg(imgBitmap, set_img);    // 비트맵을 이미지 형태로 저장
-                        }else if(set_img=="img1.png"){
+                        }else if(set_img=="image1.png"){
                             Image1.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
                             saveBitmapToJpeg(imgBitmap, set_img);    // 비트맵을 이미지 형태로 저장
-                        }else if(set_img=="img2.png"){
+                        }else if(set_img=="image2.png"){
                             Image2.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
                             saveBitmapToJpeg(imgBitmap, set_img);    // 비트맵을 이미지 형태로 저장
-                        }else if(set_img=="img3.png"){
+                        }else if(set_img=="image3.png"){
                             Image3.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
                             saveBitmapToJpeg(imgBitmap, set_img);    // 비트맵을 이미지 형태로 저장
                         }else{
