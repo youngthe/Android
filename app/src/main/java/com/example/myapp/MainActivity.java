@@ -157,25 +157,25 @@ public class MainActivity extends AppCompatActivity {
         intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, ImageCrop);
     }
-    public void Image1(){
+    public void Image1(View view){
         set_img = img1;
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, ImageCrop);
     }
-    public void Image2(){
+    public void Image2(View view){
         set_img = img2;
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, ImageCrop);
     }
-    public void Image3(){
+    public void Image3(View view){
         set_img = img3;
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, ImageCrop);
     }
-    public void Image4(){
+    public void Image4(View view){
         set_img = img4;
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
