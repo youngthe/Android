@@ -35,9 +35,15 @@ public class MainActivity extends AppCompatActivity {
         ProgressBar progressbar1;
         ProgressBar progressbar2;
         ImageView Main_background;
-        String imgName = "myapp.png";    // 이미지 이름
         Uri ImagefileUri;
         SQLiteDatabase SQLitedb;
+        String set_img;
+        String backimg = "background.png";    // 이미지 이름
+        String img1 = "image1.png";
+        String img2 = "image2.png";
+        String img3 = "image3.png";
+        String img4 = "image4.png";
+        ImageView setImageView;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +51,34 @@ public class MainActivity extends AppCompatActivity {
         foundation();
 
         //내부 저장소에 저장되어 있는 이미지 불러오기.
-        String imgpath = getCacheDir() +"/"+ imgName; // 내부 저장소에 저장되어 있는 이미지 경로 저장
+        comming_img();
+    }
+    public void comming_img(){
+
+        String imgpath = getCacheDir() +"/"+ backimg; // 내부 저장소에 저장되어 있는 이미지 경로 저장
         Bitmap bm = BitmapFactory.decodeFile(imgpath); //imgpath에 존재하는 이미지 가져옴.
-        Main_background = findViewById(R.id.Main_background);
-        Main_background.setImageBitmap(bm);
+        setImageView = findViewById(R.id.Main_background);
+        setImageView.setImageBitmap(bm);
+
+        imgpath = getCacheDir() +"/"+ img1; // 내부 저장소에 저장되어 있는 이미지 경로 저장
+        bm = BitmapFactory.decodeFile(imgpath); //imgpath에 존재하는 이미지 가져옴.
+        setImageView = findViewById(R.id.ImageView1);
+        setImageView.setImageBitmap(bm);
+
+        imgpath = getCacheDir() +"/"+ img2; // 내부 저장소에 저장되어 있는 이미지 경로 저장
+        bm = BitmapFactory.decodeFile(imgpath); //imgpath에 존재하는 이미지 가져옴.
+        setImageView = findViewById(R.id.ImageView2);
+        setImageView.setImageBitmap(bm);
+
+        imgpath = getCacheDir() +"/"+ img3; // 내부 저장소에 저장되어 있는 이미지 경로 저장
+        bm = BitmapFactory.decodeFile(imgpath); //imgpath에 존재하는 이미지 가져옴.
+        setImageView = findViewById(R.id.ImageView3);
+        setImageView.setImageBitmap(bm);
+
+        imgpath = getCacheDir() +"/"+ img4; // 내부 저장소에 저장되어 있는 이미지 경로 저장
+        bm = BitmapFactory.decodeFile(imgpath); //imgpath에 존재하는 이미지 가져옴.
+        setImageView = findViewById(R.id.ImageView4);
+        setImageView.setImageBitmap(bm);
 
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -73,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         Bitmap imgBitmap = extras.getParcelable("data");
                         Main_background.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
-                        saveBitmapToJpeg(imgBitmap);    // 비트맵을 이미지 형태로 저장
+                        saveBitmapToJpeg(imgBitmap, set_img);    // 비트맵을 이미지 형태로 저장
                     } catch (Exception e) {}
                 }
                 break;
@@ -104,10 +134,36 @@ public class MainActivity extends AppCompatActivity {
 
     //배경화면 클릭을 하면 갤러리를 키는 함수
     public void onClickBackground(View view){
+        set_img = backimg;
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, ImageCrop);
     }
+    public void Image1(){
+        set_img = img1;
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(intent, ImageCrop);
+    }
+    public void Image2(){
+        set_img = img2;
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(intent, ImageCrop);
+    }
+    public void Image3(){
+        set_img = img3;
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(intent, ImageCrop);
+    }
+    public void Image4(){
+        set_img = img4;
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
+        startActivityForResult(intent, ImageCrop);
+    }
+
 
     //데이터베이스에서 데이터 가져오는 함수
     private void getData(){
@@ -176,8 +232,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     //위 함수에서 사용하는 이미지 저장함수
-    public void saveBitmapToJpeg(Bitmap bitmap) {   // 선택한 이미지 내부 저장소에 저장
-        File tempFile = new File(getCacheDir(), imgName);    // 파일 경로와 이름 넣기
+    public void saveBitmapToJpeg(Bitmap bitmap, String set_img) {   // 선택한 이미지 내부 저장소에 저장
+        File tempFile = new File(getCacheDir(), set_img);    // 파일 경로와 이름 넣기
         try {
             tempFile.createNewFile();   // 자동으로 빈 파일을 생성하기
             FileOutputStream out = new FileOutputStream(tempFile);  // 파일을 쓸 수 있는 스트림을 준비하기

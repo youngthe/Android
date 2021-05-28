@@ -190,7 +190,8 @@
                         android:layout_column="0"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="5dp"
-                        android:src="@drawable/onepage">
+                        android:src="@drawable/onepage"
+                        android:onClick="Image1">
                     </ImageView>
 
                     <ImageView
@@ -199,7 +200,8 @@
                         android:layout_height="70dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
-                        android:src="@drawable/twopage"></ImageView>
+                        android:src="@drawable/twopage"
+                        android:onClick="Image2"></ImageView>
 
                     <ImageView
                         android:id="@+id/ImageView3"
@@ -207,7 +209,8 @@
                         android:layout_height="70dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
-                        android:src="@drawable/treepage"></ImageView>
+                        android:src="@drawable/treepage"
+                        android:onClick="Image3"></ImageView>
 
                     <ImageView
                         android:id="@+id/ImageView4"
@@ -215,7 +218,8 @@
                         android:layout_height="70dp"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"
-                        android:src="@drawable/fourpage"></ImageView>
+                        android:src="@drawable/fourpage"
+                        android:onClick="Image4"></ImageView>
                 </TableRow>
 
             </TableLayout>
