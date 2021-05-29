@@ -116,7 +116,7 @@
             android:id="@+id/textView5"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="이미지 추가"
+            android:text="진급 날짜 변경"
             android:gravity="center" />
 
         <Button

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Setting">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/abc_vector_test"
+                android:onClick="onClickBackSetting"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="9">
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:stretchColumns="1"
+                android:shrinkColumns="*">
+                <TableRow>
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="180dp"
+                        android:layout_height="match_parent"
+                        android:text="일병 진급날"
+                        android:gravity="center_vertical|center"
+                        />
+
+                    <Button
+                        android:id="@+id/bt1"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:text=""
+                        android:layout_span="3"/>
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:text="상병 진급날"
+                        android:gravity="center"/>
+                    <Button
+                        android:id="@+id/bt2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:layout_span="3"/>
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="80dp"
+                        android:layout_height="50dp"
+                        android:text="병장 진급날"
+                        android:gravity="center"/>
+
+                    <Button
+                        android:id="@+id/bt3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:layout_span="3"/>
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_span="4">
+                    </TextView>
+                </TableRow>
+                <TableRow>
+                    <Button
+                        android:id="@+id/set_button2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="저장하기"
+                        android:layout_span="4"
+                        android:onClick="onClickSave"/>
+                </TableRow>
+
+            </TableLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
