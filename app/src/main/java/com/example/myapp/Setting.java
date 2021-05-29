@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.time.LocalDate;
+import java.util.Calendar;
 
 public class Setting extends AppCompatActivity {
     private static final int ImageCrop = 1;
@@ -88,8 +90,12 @@ public class Setting extends AppCompatActivity {
         } catch (Exception e) {}
     }
     public void setDatePicker(){
-        DatePickerDialog dialog1 = new DatePickerDialog(this, listener1, 2020, 2, 9);
-        DatePickerDialog dialog2 = new DatePickerDialog(this, listener2, 2021, 11, 8);
+        Calendar Date = Calendar.getInstance();
+        int year = Date.get(Calendar.YEAR);
+        int month = Date.get(Calendar.MONTH);
+        int day = Date.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog dialog1 = new DatePickerDialog(this, listener1,year,month,day);
+        DatePickerDialog dialog2 = new DatePickerDialog(this, listener2,year,month,day);
         bt1 = findViewById(R.id.bt1);
         bt1.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
