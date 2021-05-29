@@ -46,8 +46,9 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:text=""
-            android:layout_span="2"/>
+            android:layout_span="3"/>
         </TableRow>
+
         <TableRow>
         <TextView
             android:id="@+id/textView2"
@@ -60,8 +61,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
-            android:layout_span="2"/>
+            android:layout_span="3"/>
          </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="80dp"
+                    android:layout_height="50dp"
+                    android:text="부대"
+                    android:gravity="center"/>
+
+                <RadioButton
+                    android:id="@+id/r_btn1"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_span="1"
+                    android:text="육군" />
+
+                <RadioButton
+                    android:id="@+id/r_btn2"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_span="1"
+                    android:text="공군" />
+
+                <RadioButton
+                    android:id="@+id/r_btn3"
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:layout_span="1"
+                    android:text="해군" />
+            </TableRow>
 
          <TableRow>
         <TextView
@@ -76,7 +107,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Button"
-            android:layout_span="2"
+            android:layout_span="3"
             android:onClick="onClick"/>
         </TableRow>
 
@@ -93,13 +124,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Button"
-            android:layout_span="2"/>
+            android:layout_span="3"/>
         </TableRow>
         <TableRow>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_span="3">
+                android:layout_span="4">
             </TextView>
         </TableRow>
         <TableRow>
@@ -108,7 +139,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="저장하기"
-                android:layout_span="2"
+                android:layout_span="4"
                 android:onClick="onClickSave"/>
         </TableRow>
 
