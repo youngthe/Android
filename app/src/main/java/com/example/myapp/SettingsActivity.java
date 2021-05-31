@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 
 import androidx.appcompat.app.ActionBar;
@@ -23,6 +24,7 @@ public class SettingsActivity extends AppCompatActivity {
     int threeLevelyear; //병장 진급해
     int threeLevelmonth; //병장 진급월
     int threeLevelDay; //병장 진급일
+    Button bt1, bt2, bt3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,8 @@ public class SettingsActivity extends AppCompatActivity {
         int day = Date.get(Calendar.DAY_OF_MONTH);
         DatePickerDialog dialog1 = new DatePickerDialog(this, listener1,year,month,day);
         DatePickerDialog dialog2 = new DatePickerDialog(this, listener2,year,month,day);
-        bt1 = findViewById(R.id.bt1);
+        DatePickerDialog dialog3 = new DatePickerDialog(this, listener3,year,month,day);
+        Button bt1 = findViewById(R.id.bt1);
         bt1.setOnClickListener(new View.OnClickListener(){
                                    public void onClick(View view){
                                        dialog1.show();
@@ -51,11 +54,19 @@ public class SettingsActivity extends AppCompatActivity {
                                }
         );
 
-        bt2 = findViewById(R.id.bt2);
+        Button bt2 = findViewById(R.id.bt2);
         bt2.setOnClickListener(new View.OnClickListener(){
                                    public void onClick(View view){
                                        //입대일 버튼 누를 시 데이트피커 창 오픈
                                        dialog2.show();
+                                   }
+                               }
+        );
+        Button bt3 = findViewById(R.id.bt3);
+        bt3.setOnClickListener(new View.OnClickListener(){
+                                   public void onClick(View view){
+                                       //입대일 버튼 누를 시 데이트피커 창 오픈
+                                       dialog3.show();
                                    }
                                }
         );
@@ -87,7 +98,7 @@ public class SettingsActivity extends AppCompatActivity {
             threeLevelyear = year;
             threeLevelmonth = (monthOfYear+1);
             threeLevelDay = dayOfMonth;
-            bt2.setText(year+"."+(monthOfYear+1)+"."+ dayOfMonth);
+            bt3.setText(year+"."+(monthOfYear+1)+"."+ dayOfMonth);
         }
     };
 }
