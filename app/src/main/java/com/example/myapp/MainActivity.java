@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
         textView_endDday.setText("D-"+(remainingWork-1)); //얼마 남았는지 D-DAY 출력
         //군 복무 percent 구하는 함수
         textView_percent1 = findViewById(R.id.percent1);
-        float howmanypercent = ((float)howmanyWork+1/(float)totalWork)*(float)100;
+        float howmanypercent = (((float)howmanyWork+1)/(float)totalWork)*(float)100;
         textView_percent1.setText(String.format("%.1f", howmanypercent)+"%");
         progressbar1 = findViewById(R.id.determinateBar1);
         progressbar1.setProgress((int)howmanypercent);
