@@ -272,7 +272,7 @@ public class MainActivity extends AppCompatActivity {
             long today = todayCal.getTimeInMillis()/86400000; //초 변환
             long day = ddayCal.getTimeInMillis()/86400000;
             long count = today - day;
-            return (int) count;
+            return (int) count-1;
         }
         catch(Exception e){
             e.printStackTrace();
@@ -297,7 +297,7 @@ public class MainActivity extends AppCompatActivity {
         level4.set(Comeyear, Comemonth + 14, Comeday); //이병(2개월)+일병(6개월)+상병(6개월)
         level5.set(Outyear, Outmonth -1, (Outday+1)); //전역
 
-        long today = todayCal.getTimeInMillis() / 86400000;
+        long today = todayCal.getTimeInMillis() / 86400000; //오늘 날짜
         long start = startDay.getTimeInMillis() / 86400000;
         long onelevel = level1.getTimeInMillis() / 86400000;//훈련병(1개월)
         long twolevel = level2.getTimeInMillis() / 86400000;//이병(2개월)
@@ -341,17 +341,15 @@ public class MainActivity extends AppCompatActivity {
             Next_class.setText("병장");
             total = fourlevel-treelevel;
             percent = ((float)(today-treelevel)/(float)total)*(float)100;
-        }else if (today < fivelevel) {
+        }else{
             HowmanyNextClass = fivelevel-today;
             Current_class.setText("병장");
             Next_class.setText("민간인");
             total = fivelevel-fourlevel;
             percent = ((float)(today-fourlevel)/(float)total)*(float)100;
-        }else {
-            HowmanyNextClass = today-fivelevel;
-            Current_class.setText("민간인");
-            Next_class.setText("민간인");
-            percent = 100;
+
+            if(HowmanyNextClass<=0){
+            }
         }
         textView_percent2.setText(String.format("%.1f", percent)+"%");
         progressbar2 = findViewById(R.id.determinateBar2);
