@@ -52,7 +52,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         foundation();
+        comming_img();//내부 저장소에 저장되어 있는 이미지 불러오기
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setContentView(R.layout.activity_main);
+        foundation();
         comming_img();//내부 저장소에 저장되어 있는 이미지 불러오기
     }
 
@@ -181,7 +188,6 @@ public class MainActivity extends AppCompatActivity {
         intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, ImageCrop);
     }
-
 
     //데이터베이스에서 데이터 가져오는 함수
     private void getData(){
