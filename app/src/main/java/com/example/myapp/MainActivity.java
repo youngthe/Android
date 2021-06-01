@@ -133,9 +133,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             }
-            case RESULT_OK:{
+            case RESULT_CANCELED:{
                 Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
-                return;
             }
         }
     }
@@ -207,7 +206,6 @@ public class MainActivity extends AppCompatActivity {
         totalWork = ((Outdate.getTimeInMillis()/86400000)-(Comedate.getTimeInMillis()/86400000))+1;
     }
     private void init_database(){
-
         SQLitedb = null;
         File file = new File(getFilesDir(), "SQLitedb.db");
         try {
