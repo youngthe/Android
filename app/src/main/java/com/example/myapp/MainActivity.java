@@ -326,37 +326,37 @@ public class MainActivity extends AppCompatActivity {
             Current_class.setText("민간인");
             Next_class.setText("훈련병");
             total = start-today;
-            percent = ((float)(today-start)/(float)total)*(float)100;
+            percent = ((float)(today+1-start)/(float)total)*(float)100;
         }else if (today < onelevel) {
             HowmanyNextClass = onelevel-today;
             Current_class.setText("훈련병");
             Next_class.setText("이병");
             total = onelevel-start;
-            percent = ((float)(today-start)/(float)total)*(float)100;
+            percent = ((float)(today+1-start)/(float)total)*(float)100;
         }else if (today < twolevel) {
             HowmanyNextClass = twolevel-today;
             Current_class.setText("이병");
             Next_class.setText("일병");
             total = twolevel-onelevel;
-            percent = ((float)(today-onelevel)/(float)total)*(float)100;
+            percent = ((float)(today+1-onelevel)/(float)total)*(float)100;
         }else if (today < treelevel) {
             HowmanyNextClass = treelevel-today;
             Current_class.setText("일병");
             Next_class.setText("상병");
             total = treelevel-twolevel;
-            percent = ((float)(today-twolevel)/(float)total)*(float)100;
+            percent = ((float)(today+1-twolevel)/(float)total)*(float)100;
         }else if (today < fourlevel) {
             HowmanyNextClass= fourlevel-today;
             Current_class.setText("상병");
             Next_class.setText("병장");
             total = fourlevel-treelevel;
-            percent = ((float)(today-treelevel)/(float)total)*(float)100;
+            percent = ((float)(+1-treelevel)/(float)total)*(float)100;
         }else{
             HowmanyNextClass = fivelevel-today;
             Current_class.setText("병장");
             Next_class.setText("민간인");
             total = fivelevel-fourlevel;
-            percent = ((float)(today-fourlevel)/(float)total)*(float)100;
+            percent = ((float)(today+1-fourlevel)/(float)total)*(float)100;
 
             if(HowmanyNextClass<=0){
             }
