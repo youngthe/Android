@@ -135,6 +135,9 @@ public class MainActivity extends AppCompatActivity {
             }
             case RESULT_CANCELED:{
                 Toast.makeText(this, "취소 되었습니다.", Toast.LENGTH_SHORT).show();
+                Intent intent  = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                finish();
             }
         }
     }
