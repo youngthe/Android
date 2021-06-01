@@ -358,13 +358,21 @@ public class MainActivity extends AppCompatActivity {
             total = fivelevel-fourlevel;
             percent = ((float)(today+1-fourlevel)/(float)total)*(float)100;
 
-            if(HowmanyNextClass<=0){
-            }
+
         }
-        textView_percent2.setText(String.format("%.1f", percent)+"%");
-        progressbar2 = findViewById(R.id.determinateBar2);
-        progressbar2.setProgress((int)percent);
-        textView_nextClassD_day = findViewById(R.id.nextClassD_day);//다음 계급까지 남은 날
-        textView_nextClassD_day.setText("D-"+(int)(HowmanyNextClass-1));
+        //남은 날이 0 이상일 경우 전역
+        if(HowmanyNextClass<=0){
+            textView_percent1.setText("100.0%");
+            textView_percent2.setText("100.0%");
+            textView_endDday.setText("진심으로");
+            textView_nextClassD_day.setText("전역 축하합니다 ♬");
+            progressbar2.setProgress((int)percent);
+        }else {
+            textView_percent2.setText(String.format("%.1f", percent) + "%");
+            progressbar2 = findViewById(R.id.determinateBar2);
+            progressbar2.setProgress((int)percent);
+            textView_nextClassD_day = findViewById(R.id.nextClassD_day);//다음 계급까지 남은 날
+            textView_nextClassD_day.setText("D-" + (int) (HowmanyNextClass - 1));
+        }
     }
 }
