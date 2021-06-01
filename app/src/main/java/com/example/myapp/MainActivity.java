@@ -295,7 +295,7 @@ public class MainActivity extends AppCompatActivity {
         level2.set(Comeyear, Comemonth + 2, Comeday); //훈련병(1개월)+이병(2개월)
         level3.set(Comeyear, Comemonth + 8, Comeday); //이병(2개월)+일병(6개월)
         level4.set(Comeyear, Comemonth + 14, Comeday); //이병(2개월)+일병(6개월)+상병(6개월)
-        level5.set(Outyear, Outmonth -1, Outday); //전역
+        level5.set(Outyear, Outmonth -1, (Outday+1)); //전역
 
         long today = todayCal.getTimeInMillis() / 86400000;
         long start = startDay.getTimeInMillis() / 86400000;

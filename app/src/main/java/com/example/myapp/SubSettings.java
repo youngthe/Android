@@ -13,7 +13,7 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import java.util.Calendar;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SubSettings extends AppCompatActivity {
 
     int oneLevelyear; //일병 진급해
     int oneLevelmonth; //일병 진급월
