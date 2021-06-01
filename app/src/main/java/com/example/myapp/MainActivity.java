@@ -319,6 +319,7 @@ public class MainActivity extends AppCompatActivity {
         float percent; //다음 계급까지 현재 계급에서 복무한 총 일수
         Current_class = findViewById(R.id.Current_class); //현재 계급
         Next_class = findViewById(R.id.Next_class); //다음 계급
+        textView_percent1 = findViewById(R.id.percent1);
         textView_percent2 = findViewById(R.id.percent2);
         //현재 계급, 다음계급, 다음계급까지 남은 일수 출력
         if(today < start) {
@@ -362,10 +363,13 @@ public class MainActivity extends AppCompatActivity {
         }
         //남은 날이 0 이상일 경우 전역
         if(HowmanyNextClass<=0){
+            textView_endDday = findViewById(R.id.endD_day);
             textView_percent1.setText("100.0%");
             textView_percent2.setText("100.0%");
             textView_endDday.setText("진심으로");
+            textView_nextClassD_day = findViewById(R.id.nextClassD_day);
             textView_nextClassD_day.setText("전역 축하합니다 ♬");
+            progressbar2 = findViewById(R.id.determinateBar2);
             progressbar2.setProgress((int)percent);
         }else {
             textView_percent2.setText(String.format("%.1f", percent) + "%");
