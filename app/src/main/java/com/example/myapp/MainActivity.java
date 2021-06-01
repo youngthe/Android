@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity {
 
         private static final int ImageCrop = 1;
         private static final int ImageSet = 2;
-        int ComeYear, ComeMonth, ComeDay;
-        int OutYear, OutMonth, OutDay;
-        long totalWork;//총 복무일
+        int ComeYear=0, ComeMonth=0, ComeDay=0;
+        int OutYear=0, OutMonth=0, OutDay=0;
+        long totalWork=0;//총 복무일
         TextView Current_class; //현재 계급
         TextView Next_class; //다음 계급
         TextView textView_endDday;
