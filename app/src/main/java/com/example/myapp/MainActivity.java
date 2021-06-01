@@ -362,13 +362,13 @@ public class MainActivity extends AppCompatActivity {
 
         }
         //남은 날이 0 이상일 경우 전역
-        if(HowmanyNextClass<=0){
+        if(HowmanyNextClass<=1){
             textView_endDday = findViewById(R.id.endD_day);
             textView_percent1.setText("100.0%");
             textView_percent2.setText("100.0%");
-            textView_endDday.setText("진심으로");
+            textView_endDday.setText("전역");
             textView_nextClassD_day = findViewById(R.id.nextClassD_day);
-            textView_nextClassD_day.setText("전역 축하합니다 ♬");
+            textView_nextClassD_day.setText(" 축하합니다 ♬");
             progressbar2 = findViewById(R.id.determinateBar2);
             progressbar2.setProgress((int)percent);
         }else {
