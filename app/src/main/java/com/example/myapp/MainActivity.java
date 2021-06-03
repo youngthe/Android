@@ -98,8 +98,8 @@ public class MainActivity extends AppCompatActivity {
                 ImagefileUri = data.getData(); //갤러리에서 이미지 가져오기
                 Intent intent = new Intent("com.android.camera.action.CROP");
                 intent.setDataAndType(ImagefileUri, "image/*");
-                intent.putExtra("outputX", 340);// 크롭한 이미지의 x축 크기
-                intent.putExtra("outputY", 340);// 크롭한 이미지의 y축 크기
+                intent.putExtra("outputX", 350);// 크롭한 이미지의 x축 크기
+                intent.putExtra("outputY", 350);// 크롭한 이미지의 y축 크기
                 intent.putExtra("aspectX", 1);// crop 박스의 x축 크기
                 intent.putExtra("aspectY", 1);// crop 박스의 y축 크기
                 intent.putExtra("scale", true);
