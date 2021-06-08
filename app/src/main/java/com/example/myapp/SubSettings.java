@@ -30,11 +30,10 @@ public class SubSettings extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_level);
+        setDatePicker();
         }
 
         public void onClickBackSetting(View view){
-            Intent intent = new Intent(this, Setting.class);
-            startActivity(intent);
             finish();
         }
 
