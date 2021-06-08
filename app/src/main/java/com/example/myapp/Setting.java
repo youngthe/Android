@@ -45,7 +45,10 @@ public class Setting extends AppCompatActivity {
         setDatePicker();
 
     }
-
+    public void SettingNextLevel(View view){
+        Intent intent = new Intent(this, SubSettings.class);
+        startActivity(intent);
+    }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch(requestCode) {
