@@ -43,7 +43,15 @@ public class Setting extends AppCompatActivity {
         init_table();//테이블 생성
         load_values();//값 입력
         setDatePicker();
-
+        Button ImgSet = findViewById(R.id.bt3);
+        ImgSet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
+                startActivityForResult(intent, ImageCrop);
+            }
+        });
     }
     public void SettingNextLevel(View view){
         Intent intent = new Intent(this, SubSettings.class);
