@@ -19,11 +19,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="8">
+            android:layout_weight="6.5">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                android:layout_height="480dp">
 
                 <ImageView
                     android:id="@+id/modify"
@@ -38,7 +38,7 @@
                 <ImageView
                     android:id="@+id/Main_background"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_height="380dp"
                     android:layout_marginTop="50dp"
                     android:layout_marginLeft="2dp"
                     android:layout_marginRight="2dp"
@@ -76,10 +76,11 @@
                     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginBottom="110dp"
+                    android:layout_marginTop="-98dp"
+                    android:layout_below="@+id/Main_background"
+
                     android:progress="20"
                     android:progressDrawable="@drawable/progressbar_progressbar1"/>
 
@@ -138,12 +139,13 @@
                     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/Main_background"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginBottom="70dp"
+                    android:layout_marginTop="-60dp"
                     android:progress="20"
-                    android:progressDrawable="@drawable/progressbar_progressbar1"/>
+                    android:progressDrawable="@drawable/progressbar_progressbar1" />
+
                 <TextView
                     android:id="@+id/nextClassD_day"
                     android:layout_width="80dp"

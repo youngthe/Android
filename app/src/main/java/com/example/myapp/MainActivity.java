@@ -1,14 +1,18 @@
 package com.example.myapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -61,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         foundation();
         comming_img();//내부 저장소에 저장되어 있는 이미지 불러오기
+
     }
 
     //내부 저장소에 저장되어 있는 이미지 불러오기
@@ -158,8 +163,16 @@ public class MainActivity extends AppCompatActivity {
         progressbar1 = findViewById(R.id.determinateBar1);
         progressbar1.setProgress((int)howmanypercent);
         WhatyourClass(ComeYear, ComeMonth, ComeDay, OutYear, OutMonth, OutDay);//현재 계급, 다음 계급, 다음계급까지 얼마나 남았는지 출력
-    }
 
+        Point p = getScreenSize(this);
+        Main_background.getLayoutParams().height=p.x;
+    }
+    public Point getScreenSize(Activity activty){
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return size;
+    }
     //배경화면 클릭을 하면 갤러리를 키는 함수
     public void onClickBackground(View view){
         set_img = backimg;
