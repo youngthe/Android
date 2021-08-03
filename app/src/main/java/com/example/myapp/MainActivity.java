@@ -1,5 +1,5 @@
 package com.example.myapp;
-
+//사진 보여주고, 진급까지 얼마나 남았는지, 전역까지 얼마나 남았는지 보여주는 엑티비티
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;

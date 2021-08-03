@@ -103,7 +103,7 @@
             android:id="@+id/backgroundImgChange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:text="이미지 변경"
             android:layout_span="3"/>
         </TableRow>
 
@@ -119,9 +119,9 @@
             android:id="@+id/bt4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button"
+            android:text="진급 날짜 변경"
             android:layout_span="3"
-            android:onClick="SettingNextLevel"/>
+            android:onClick="SubSettings"/>
         </TableRow>
         <TableRow>
             <TextView
