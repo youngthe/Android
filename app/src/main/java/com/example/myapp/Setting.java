@@ -56,7 +56,7 @@ public class Setting extends AppCompatActivity {
     }
 
     //진급 날짜 셋팅하기 위한 SubSettings 엑티비티로 이동
-    public void SubSettings(View view){
+    public void SubSetting(View view){
         Intent intent = new Intent(this, SubSettings.class);
         startActivity(intent);
     }

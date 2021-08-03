@@ -121,7 +121,7 @@
             android:layout_height="wrap_content"
             android:text="진급 날짜 변경"
             android:layout_span="3"
-            android:onClick="SubSettings"/>
+            android:onClick="SubSetting"/>
         </TableRow>
         <TableRow>
             <TextView
