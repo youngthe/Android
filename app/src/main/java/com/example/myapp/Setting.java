@@ -1,6 +1,5 @@
 package com.example.myapp;
 
-//입대날, 전역날, 배경화면 설정, 진급날 변경
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
@@ -44,24 +43,12 @@ public class Setting extends AppCompatActivity {
         init_table();//테이블 생성
         load_values();//값 입력
         setDatePicker();
-        Button ImgSet = findViewById(R.id.backgroundImgChange);
-        ImgSet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
-                startActivityForResult(intent, ImageCrop);
-            }
-        });
-    }
 
-    //진급 날짜 셋팅하기 위한 SubSettings 엑티비티로 이동
-    public void SubSetting(View view){
+    }
+    public void SettingNextLevel(View view){
         Intent intent = new Intent(this, SubSettings.class);
         startActivity(intent);
     }
-
-    //이미지 크롭 관련 셋팅
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch(requestCode) {
@@ -91,14 +78,11 @@ public class Setting extends AppCompatActivity {
         }
 
     }
-    //이미지 크롭
     public void onClick(View view){
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, ImageCrop);
     }
-
-    //이미지 저장
     public void saveBitmapToJpeg(Bitmap bitmap) {   // 선택한 이미지 내부 저장소에 저장
         File tempFile = new File(getCacheDir(), imgName);    // 파일 경로와 이름 넣기
         try {
@@ -214,7 +198,6 @@ public class Setting extends AppCompatActivity {
         }
     }
 
-    //데이터베이스 테이블 생성
     private void init_table(){
         if(SQLitedb != null) {
             try {
@@ -230,7 +213,6 @@ public class Setting extends AppCompatActivity {
         }
     }
 
-    //입대날, 전역날 데이트피커에 입력된 값 데이터베이스에 저장
     private void save_values(){
         if(SQLitedb != null){
             try {

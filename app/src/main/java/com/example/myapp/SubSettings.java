@@ -1,5 +1,5 @@
 package com.example.myapp;
-//Setting 엑티비티의 서브 엑티비티로, 진급 날짜가 다를 경우 사용하는 엑티비티
+
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +14,6 @@ import androidx.preference.PreferenceFragmentCompat;
 import java.util.Calendar;
 
 public class SubSettings extends AppCompatActivity {
-
     int oneLevelyear; //일병 진급해
     int oneLevelmonth; //일병 진급월
     int oneLevelDay; //일병 진급일
@@ -36,7 +35,6 @@ public class SubSettings extends AppCompatActivity {
         public void onClickBackSetting(View view){
             finish();
         }
-
 
     public void setDatePicker(){
         Calendar Date = Calendar.getInstance();
