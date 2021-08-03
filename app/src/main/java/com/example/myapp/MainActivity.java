@@ -93,6 +93,46 @@ public class MainActivity extends AppCompatActivity {
     }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==ImageCrop){
+            ImagefileUri = data.getData(); //갤러리에서 이미지 가져오기
+                Intent intent = new Intent("com.android.camera.action.CROP");
+                intent.setDataAndType(ImagefileUri, "image/*");
+                intent.putExtra("outputX", 350);// 크롭한 이미지의 x축 크기
+                intent.putExtra("outputY", 350);// 크롭한 이미지의 y축 크기
+                intent.putExtra("aspectX", 1);// crop 박스의 x축 크기
+                intent.putExtra("aspectY", 1);// crop 박스의 y축 크기
+                intent.putExtra("scale", true);
+                intent.putExtra("return-data", true);
+                startActivityForResult(intent, ImageSet);
+        }
+        else if(requestCode==ImageSet){
+            final Bundle extras = data.getExtras();
+                if (resultCode == RESULT_OK) {
+                    try {
+                        Bitmap imgBitmap = extras.getParcelable("data");
+
+                        if(set_img=="background.png"){
+                            Main_background.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
+                            saveBitmapToJpeg(imgBitmap, set_img);    // 비트맵을 이미지 형태로 저장
+                        }else if(set_img=="image1.png"){
+                            Image1.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
+                            saveBitmapToJpeg(imgBitmap, set_img);    // 비트맵을 이미지 형태로 저장
+                        }else if(set_img=="image2.png"){
+                            Image2.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
+                            saveBitmapToJpeg(imgBitmap, set_img);    // 비트맵을 이미지 형태로 저장
+                        }else if(set_img=="image3.png"){
+                            Image3.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
+                            saveBitmapToJpeg(imgBitmap, set_img);    // 비트맵을 이미지 형태로 저장
+                        }else{
+                            Image4.setImageBitmap(imgBitmap);    // 선택한 이미지 이미지뷰에 셋
+                            saveBitmapToJpeg(imgBitmap, set_img);    // 비트맵을 이미지 형태로 저장
+                        }
+                    } catch (Exception e) {}
+                }
+        }
+
+        /*
         switch(requestCode) {
             case ImageCrop:{
                 ImagefileUri = data.getData(); //갤러리에서 이미지 가져오기
@@ -136,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
             case RESULT_CANCELED:{
                 finish();
             }
-        }
+        }*/
     }
 
     public void onClickModify(View v){
