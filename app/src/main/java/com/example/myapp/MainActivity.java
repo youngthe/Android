@@ -98,29 +98,26 @@ public class MainActivity extends AppCompatActivity {
 
         switch(requestCode) {
             case ImageCrop:{
-                //뒤로가기 및 취소했을 경우 이전화면으로 돌아감
-                if(requestCode== Activity.RESULT_OK){
+                if(resultCode == RESULT_OK) {
+                    ImagefileUri = data.getData(); //갤러리에서 이미지 가져오기
+                    Intent intent = new Intent("com.android.camera.action.CROP");
+                    intent.setDataAndType(ImagefileUri, "image/*");
+                    intent.putExtra("outputX", 350);// 크롭한 이미지의 x축 크기
+                    intent.putExtra("outputY", 350);// 크롭한 이미지의 y축 크기
+                    intent.putExtra("aspectX", 1);// crop 박스의 x축 크기
+                    intent.putExtra("aspectY", 1);// crop 박스의 y축 크기
+                    intent.putExtra("scale", true);
+                    intent.putExtra("return-data", true);
+                    startActivityForResult(intent, ImageSet);
+                    break;
+                }
+                else{
                     return;
                 }
-                ImagefileUri = data.getData(); //갤러리에서 이미지 가져오기
-                Intent intent = new Intent("com.android.camera.action.CROP");
-                intent.setDataAndType(ImagefileUri, "image/*");
-                intent.putExtra("outputX", 350);// 크롭한 이미지의 x축 크기
-                intent.putExtra("outputY", 350);// 크롭한 이미지의 y축 크기
-                intent.putExtra("aspectX", 1);// crop 박스의 x축 크기
-                intent.putExtra("aspectY", 1);// crop 박스의 y축 크기
-                intent.putExtra("scale", true);
-                intent.putExtra("return-data", true);
-                startActivityForResult(intent, ImageSet);
-                break;
             }
             case ImageSet:{
-                //뒤로가기 및 취소했을 경우 이전화면으로 돌아감
-                if(requestCode== Activity.RESULT_OK){
-                    return;
-                }
-                final Bundle extras = data.getExtras();
                 if (resultCode == RESULT_OK) {
+                    final Bundle extras = data.getExtras();
                     try {
                         Bitmap imgBitmap = extras.getParcelable("data");
 
@@ -141,6 +138,8 @@ public class MainActivity extends AppCompatActivity {
                             saveBitmapToJpeg(imgBitmap, set_img);    // 비트맵을 이미지 형태로 저장
                         }
                     } catch (Exception e) {}
+                }else{
+                    return;
                 }
                 break;
             }
