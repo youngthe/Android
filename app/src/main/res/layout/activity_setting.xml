@@ -105,7 +105,7 @@
             android:layout_height="wrap_content"
             android:text="Button"
             android:layout_span="3"
-            android:onClick="onClick"/>
+            android:onClick="onClickImageChange"/>
         </TableRow>
 
         <TableRow>

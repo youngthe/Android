@@ -45,6 +45,7 @@ public class Setting extends AppCompatActivity {
         setDatePicker();
 
     }
+    // 진급 날짜 변경
     public void SettingNextLevel(View view){
         Intent intent = new Intent(this, SubSettings.class);
         startActivity(intent);
@@ -53,32 +54,40 @@ public class Setting extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         switch(requestCode) {
             case ImageCrop:{
-                ImagefileUri = data.getData(); //갤러리에서 이미지 가져오기
-                Intent intent = new Intent("com.android.camera.action.CROP");
-                intent.setDataAndType(ImagefileUri, "image/*");
-                intent.putExtra("outputX", 340);// 크롭한 이미지의 x축 크기
-                intent.putExtra("outputY", 340);// 크롭한 이미지의 y축 크기
-                intent.putExtra("aspectX", 1);// crop 박스의 x축 크기
-                intent.putExtra("aspectY", 1);// crop 박스의 y축 크기
-                intent.putExtra("scale", true);
-                intent.putExtra("return-data", true);
-                startActivityForResult(intent, ImageSet);
-                break;
+                if(resultCode == RESULT_OK) {
+                    ImagefileUri = data.getData(); //갤러리에서 이미지 가져오기
+                    Intent intent = new Intent("com.android.camera.action.CROP");
+                    intent.setDataAndType(ImagefileUri, "image/*");
+                    intent.putExtra("outputX", 340);// 크롭한 이미지의 x축 크기
+                    intent.putExtra("outputY", 340);// 크롭한 이미지의 y축 크기
+                    intent.putExtra("aspectX", 1);// crop 박스의 x축 크기
+                    intent.putExtra("aspectY", 1);// crop 박스의 y축 크기
+                    intent.putExtra("scale", true);
+                    intent.putExtra("return-data", true);
+                    startActivityForResult(intent, ImageSet);
+                    break;
+                }
+                else{
+                    return;
+                }
             }
             case ImageSet:{
-                final Bundle extras = data.getExtras();
                 if (resultCode == RESULT_OK) {
                     try {
+                        final Bundle extras = data.getExtras();
                         Bitmap imgBitmap = extras.getParcelable("data");
                         saveBitmapToJpeg(imgBitmap);    // 비트맵을 이미지 형태로 저장
                     } catch (Exception e) {}
+                }else{
+                    return;
                 }
                 break;
             }
         }
 
     }
-    public void onClick(View view){
+    //배경 이미지 변경 클릭 시 작동하는 함수
+    public void onClickImageChange(View view){
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, ImageCrop);
@@ -102,6 +111,7 @@ public class Setting extends AppCompatActivity {
         bt1 = findViewById(R.id.bt1);
         bt1.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
+                //입대일 버튼 누를 시 데이터피커 창 오픈
                 dialog1.show();
             }
         }
@@ -110,7 +120,7 @@ public class Setting extends AppCompatActivity {
         bt2 = findViewById(R.id.bt2);
         bt2.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
-                //입대일 버튼 누를 시 데이트피커 창 오픈
+                //전역일 버튼 누를 시 데이트피커 창 오픈
                 dialog2.show();
             }
         }
