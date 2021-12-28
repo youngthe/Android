@@ -23,8 +23,8 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-        private static final int ImageCrop = 1;
-        private static final int ImageSet = 2;
+        private static final int ImageSelect = 1;
+        private static final int ImageCrop = 2;
         int ComeYear=0, ComeMonth=0, ComeDay=0;
         int OutYear=0, OutMonth=0, OutDay=0;
         long totalWork=0;//총 복무일
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch(requestCode) {
-            case ImageCrop:{
+            case ImageSelect:{
                 if(resultCode == RESULT_OK) {
                     ImagefileUri = data.getData(); //갤러리에서 이미지 가져오기
                     Intent intent = new Intent("com.android.camera.action.CROP");
@@ -108,14 +108,14 @@ public class MainActivity extends AppCompatActivity {
                     intent.putExtra("aspectY", 1);// crop 박스의 y축 크기
                     intent.putExtra("scale", true);
                     intent.putExtra("return-data", true);
-                    startActivityForResult(intent, ImageSet);
+                    startActivityForResult(intent, ImageCrop);
                     break;
                 }
                 else{
                     return;
                 }
             }
-            case ImageSet:{
+            case ImageCrop:{
                 if (resultCode == RESULT_OK) {
                     final Bundle extras = data.getExtras();
                     try {
@@ -139,7 +139,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     } catch (Exception e) {}
                 }else{
-                    return;
+                    Intent intent = new Intent(Intent.ACTION_PICK);
+                    intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
+                    startActivityForResult(intent, ImageSelect);
                 }
                 break;
             }
@@ -172,31 +174,31 @@ public class MainActivity extends AppCompatActivity {
         set_img = backimg;
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
-        startActivityForResult(intent, ImageCrop);
+        startActivityForResult(intent, ImageSelect);
     }
     public void Image1(View view){
         set_img = img1;
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
-        startActivityForResult(intent, ImageCrop);
+        startActivityForResult(intent, ImageSelect);
     }
     public void Image2(View view){
         set_img = img2;
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
-        startActivityForResult(intent, ImageCrop);
+        startActivityForResult(intent, ImageSelect);
     }
     public void Image3(View view){
         set_img = img3;
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
-        startActivityForResult(intent, ImageCrop);
+        startActivityForResult(intent, ImageSelect);
     }
     public void Image4(View view){
         set_img = img4;
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
-        startActivityForResult(intent, ImageCrop);
+        startActivityForResult(intent, ImageSelect);
     }
 
     //데이터베이스에서 데이터 가져오는 함수

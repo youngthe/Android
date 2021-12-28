@@ -25,8 +25,8 @@ import java.time.LocalDate;
 import java.util.Calendar;
 
 public class Setting extends AppCompatActivity {
-    private static final int ImageCrop = 1;
-    private static final int ImageSet = 2;
+    private static final int ImageSelect = 1;
+    private static final int ImageCrop = 2;
     Button bt1;
     Button bt2;
     SQLiteDatabase SQLitedb;
@@ -52,7 +52,7 @@ public class Setting extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch(requestCode) {
-            case ImageCrop:{
+            case ImageSelect:{
                 if(resultCode == RESULT_OK) {
                     ImagefileUri = data.getData(); //갤러리에서 이미지 가져오기
                     Intent intent = new Intent("com.android.camera.action.CROP");
@@ -63,14 +63,14 @@ public class Setting extends AppCompatActivity {
                     intent.putExtra("aspectY", 1);// crop 박스의 y축 크기
                     intent.putExtra("scale", true);
                     intent.putExtra("return-data", true);
-                    startActivityForResult(intent, ImageSet);
+                    startActivityForResult(intent, ImageCrop);
                     break;
                 }
                 else{
                     return;
                 }
             }
-            case ImageSet:{
+            case ImageCrop :{
                 if (resultCode == RESULT_OK) {
                     try {
                         final Bundle extras = data.getExtras();
@@ -89,7 +89,7 @@ public class Setting extends AppCompatActivity {
     public void onClickImageChange(View view){
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
-        startActivityForResult(intent, ImageCrop);
+        startActivityForResult(intent, ImageSelect);
     }
     public void saveBitmapToJpeg(Bitmap bitmap) {   // 선택한 이미지 내부 저장소에 저장
         File tempFile = new File(getCacheDir(), "background.png");    // 파일 경로와 이름 넣기
