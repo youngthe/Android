@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         private static final int ImageCrop = 2;
         int ComeYear=0, ComeMonth=0, ComeDay=0;
         int OutYear=0, OutMonth=0, OutDay=0;
+        int Occupation = 0; // 0 = 육군 해군, 1 = 공군
         long totalWork=0;//총 복무일
         TextView Current_class; //현재 계급
         TextView Next_class; //다음 계급
@@ -154,19 +155,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //기초적으로 앱이 실행될 때 연산값을 연산하는 함수
-    private void foundation(){
+    private void foundation() {
         getData(); // 데이터베이스에서 입대 정보를 가져오는 함수
-        int howmanyWork = countdday(ComeYear,ComeMonth,ComeDay); //얼마나 복무했는가
+        int howmanyWork = countdday(ComeYear, ComeMonth, ComeDay); //얼마나 복무했는가
         long remainingWork = totalWork - howmanyWork; //얼마 남았는지
         textView_endDday = findViewById(R.id.endD_day);
-        textView_endDday.setText("D-"+(remainingWork-1)); //얼마 남았는지 D-DAY 출력
+        textView_endDday.setText("D-" + (remainingWork - 1)); //얼마 남았는지 D-DAY 출력
         //군 복무 percent 구하는 함수
         textView_percent1 = findViewById(R.id.percent1);
-        float howmanypercent = (((float)howmanyWork+1)/(float)totalWork)*(float)100;
-        textView_percent1.setText(String.format("%.1f", howmanypercent)+"%");
+        float howmanypercent = (((float) howmanyWork + 1) / (float) totalWork) * (float) 100;
+        textView_percent1.setText(String.format("%.1f", howmanypercent) + "%");
         progressbar1 = findViewById(R.id.determinateBar1);
-        progressbar1.setProgress((int)howmanypercent);
-        WhatyourClass(ComeYear, ComeMonth, ComeDay, OutYear, OutMonth, OutDay);//현재 계급, 다음 계급, 다음계급까지 얼마나 남았는지 출력
+        progressbar1.setProgress((int) howmanypercent);
+
+        // if(army or Navy)
+        ArmyDataAndNavy(ComeYear, ComeMonth, ComeDay, OutYear, OutMonth, OutDay);//현재 계급, 다음 계급, 다음계급까지 얼마나 남았는지 출력
+        // else{
+        //AirposeData(ComeYear, ComeMonth, ComeDay, OutYear, OutMonth, OutDay);//현재 계급, 다음 계급, 다음계급까지 얼마나 남았는지 출력
+        //}
+
     }
 
     //배경화면 클릭을 하면 갤러리를 키는 함수
@@ -230,7 +237,8 @@ public class MainActivity extends AppCompatActivity {
                         "(num integer , " +
                         "year integer, " +
                         "month integer, " +
-                        "day integer)";
+                        "day integer, " +
+                        "occupation integer)";
                 SQLitedb.execSQL(tableSQL);
             }catch (SQLiteException e){
                 Toast.makeText(getApplicationContext(),"error, can't not create table",Toast.LENGTH_SHORT).show();
@@ -297,8 +305,88 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //만약 육군 및 해군이라면 이 함수 실행
+    public void ArmyDataAndNavy(int Comeyear, int Comemonth, int Comeday, int Outyear, int Outmonth, int Outday) {
+        Calendar todayCal = Calendar.getInstance(); //오늘 날짜 가져오기
+        Calendar startDay = Calendar.getInstance();
+        Calendar level1 = Calendar.getInstance();
+        Calendar level2 = Calendar.getInstance();
+        Calendar level3 = Calendar.getInstance();
+        Calendar level4 = Calendar.getInstance();
+        Comemonth=Comemonth-1;
+        startDay.set(Comeyear, Comemonth, Comeday);
+        level1.set(Comeyear, Comemonth + 3, Comeday); //이병 3개월
+        level2.set(Comeyear, Comemonth + 9, Comeday); //이병 3개월 + 일병 6개월
+        level3.set(Comeyear, Comemonth + 15, Comeday); //이병 3개월 + 일병 6개월 + 상병 6개월
+        level4.set(Outyear, Outmonth -1, (Outday+1)); //나머지 병장 및 전역
+
+        long today = todayCal.getTimeInMillis() / 86400000; //오늘 날짜
+        long start = startDay.getTimeInMillis() / 86400000;
+        long onelevel = level1.getTimeInMillis() / 86400000; //이병 3개월
+        long twolevel = level2.getTimeInMillis() / 86400000; //이병 3개월 + 일병 6개월
+        long treelevel = level3.getTimeInMillis() / 86400000; //이병 3개월 + 일병 6개월 + 상병 6개월
+        long fourlevel = level4.getTimeInMillis() / 86400000; //나머지 병장 및 전역
+        long HowmanyNextClass; //다음 계급까지 얼마나 남았는가
+        long total; //각 계급별 총 근무일
+        float percent; //다음 계급까지 현재 계급에서 복무한 총 일수
+        Current_class = findViewById(R.id.Current_class); //현재 계급
+        Next_class = findViewById(R.id.Next_class); //다음 계급
+        textView_percent1 = findViewById(R.id.percent1);
+        textView_percent2 = findViewById(R.id.percent2);
+        //현재 계급, 다음계급, 다음계급까지 남은 일수 출력
+        if(today < start) {
+            HowmanyNextClass = start-today;
+            Current_class.setText("민간인");
+            Next_class.setText("이병");
+            total = start-today;
+            percent = ((float)(today+1-start)/(float)total)*(float)100;
+        }else if (today < onelevel) {
+            HowmanyNextClass = onelevel-today;
+            Current_class.setText("이병");
+            Next_class.setText("일병");
+            total = onelevel-start;
+            percent = ((float)(today+1-start)/(float)total)*(float)100;
+        }else if (today < twolevel) {
+            HowmanyNextClass = twolevel-today;
+            Current_class.setText("일병");
+            Next_class.setText("상병");
+            total = twolevel-onelevel;
+            percent = ((float)(today+1-onelevel)/(float)total)*(float)100;
+        }else if (today < treelevel) {
+            HowmanyNextClass = treelevel-today;
+            Current_class.setText("상병");
+            Next_class.setText("병장");
+            total = treelevel-twolevel;
+            percent = ((float)(today+1-twolevel)/(float)total)*(float)100;
+        }else{
+            HowmanyNextClass= fourlevel-today;
+            Current_class.setText("병장");
+            Next_class.setText("민간인");
+            total = fourlevel-treelevel;
+            percent = ((float)(today+1-treelevel)/(float)total)*(float)100;
+        }
+
+        //남은 날이 0 이상일 경우 전역
+        if(HowmanyNextClass<=1){
+            textView_endDday = findViewById(R.id.endD_day);
+            textView_percent1.setText("100.0%");
+            textView_percent2.setText("100.0%");
+            textView_endDday.setText("전역");
+            textView_nextClassD_day = findViewById(R.id.nextClassD_day);
+            textView_nextClassD_day.setText(" 축하합니다 ♬");
+            progressbar2 = findViewById(R.id.determinateBar2);
+            progressbar2.setProgress((int)percent);
+        }else {
+            textView_percent2.setText(String.format("%.1f", percent) + "%");
+            progressbar2 = findViewById(R.id.determinateBar2);
+            progressbar2.setProgress((int)percent);
+            textView_nextClassD_day = findViewById(R.id.nextClassD_day);//다음 계급까지 남은 날
+            textView_nextClassD_day.setText("D-" + (int) (HowmanyNextClass - 1));
+        }
+    }
     //계급이 무엇인지 나타내주는 함수
-    public void WhatyourClass(int Comeyear, int Comemonth, int Comeday, int Outyear, int Outmonth, int Outday) {
+    //만약 공군이라면 이 함수 실행
+    public void AirposeData(int Comeyear, int Comemonth, int Comeday, int Outyear, int Outmonth, int Outday) {
         Calendar todayCal = Calendar.getInstance(); //오늘 날짜 가져오기
         Calendar startDay = Calendar.getInstance();  //입대일
         Calendar level1 = Calendar.getInstance(); //훈련병 //2020.03.09
